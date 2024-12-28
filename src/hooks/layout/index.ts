@@ -1,0 +1,1 @@
+export { useLayoutContent } from "./useLayoutContent";
