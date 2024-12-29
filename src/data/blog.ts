@@ -1,4 +1,11 @@
-import { BlogPost } from "@/types";
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  tags: string[];
+  url: string;
+}
 
 export const blogPosts: BlogPost[] = [
   {
