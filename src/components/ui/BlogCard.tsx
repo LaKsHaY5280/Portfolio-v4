@@ -1,11 +1,15 @@
 "use client";
 import { motion } from "framer-motion";
-import { BlogPost } from "@/types";
 import Card from "./Card";
 import Badge from "./Badge";
 
-interface BlogCardProps extends BlogPost {
+interface BlogCardProps {
   index: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  tags: string[];
+  url: string;
 }
 
 const BlogCard = ({

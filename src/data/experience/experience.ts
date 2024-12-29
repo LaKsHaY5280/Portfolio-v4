@@ -4,7 +4,7 @@ export const experience: Experience[] = [
   {
     company: "Astraum Digital Solutions",
     role: "Full Stack Developer",
-    duration: "November 2024 – Present",
+    duration: "November 2024 – December 2024",
     responsibilities: [
       "Built a health tech platform using React.js, Node.js, and MongoDB, incorporating real-time tracking and payment integration, resulting in a 40% efficiency boost.",
       "Developed an animated, SEO-optimized website with Next.js and GSAP, increasing traffic by 60% within three months.",

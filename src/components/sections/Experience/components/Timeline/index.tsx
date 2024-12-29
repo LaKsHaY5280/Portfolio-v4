@@ -48,19 +48,66 @@ export const Timeline = () => {
         </motion.div>
       </div>
 
-      <div className="timeline-grid grid grid-cols-[repeat(14,1fr)] gap-x-6 gap-y-12 mb-16 min-h-[500px] relative w-full">
+      <div
+        className="timeline-grid grid grid-cols-[repeat(14,1fr)] gap-y-12 p-5 min-h-[500px] relative w-full
+                   rounded-3xl border border-earth-dark/10 shadow-[0_0_40px_-15px_rgba(0,0,0,0.2)] bg-earth-light/5"
+      >
+        {/* Base layer with blur */}
         <motion.div
-          className="absolute inset-0 backdrop-blur-[4px] bg-earth-light/10 w-full"
+          className="absolute inset-0 backdrop-blur-[4px] bg-earth-light/10 w-full rounded-3xl"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         />
+
+        {/* Fine grid with subtle animation */}
+        <motion.div
+          className="absolute inset-0 w-full rounded-3xl
+                     [background-image:linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)]
+                     [background-size:30px_30px]"
+          initial={{ opacity: 0, scale: 1.05 }}
+          whileInView={{
+            opacity: 1,
+            scale: 1,
+            backgroundPosition: ["0px 0px", "-30px -30px"],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          viewport={{ once: true }}
+        />
+
+        {/* Larger grid overlay */}
+        <motion.div
+          className="absolute inset-0 w-full rounded-3xl
+                     [background-image:linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)]
+                     [background-size:150px_150px]"
+          initial={{ opacity: 0, scale: 1.05 }}
+          whileInView={{
+            opacity: 1,
+            scale: 1,
+            backgroundPosition: ["0px 0px", "-150px -150px"],
+          }}
+          transition={{
+            duration: 50,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          viewport={{ once: true }}
+        />
+
+        {/* Inner shadow overlay */}
+        <div className="absolute inset-0 rounded-3xl shadow-[inset_0_0_30px_rgba(0,0,0,0.05)]" />
+
         {experience.map((exp, index) => (
           <TimelineItem
             key={index}
             experience={exp}
             index={index}
             total={experience.length}
+            allExperiences={experience}
           />
         ))}
       </div>

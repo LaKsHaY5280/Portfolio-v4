@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Experience } from "@/data/experience/types";
 import { useExperienceContent } from "@/hooks/experience";
 import { formatDuration } from "../../utils";
+import { useEffect, useRef, useState } from "react";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -14,17 +15,54 @@ export const ExperienceCard = ({
   isVisible,
 }: ExperienceCardProps) => {
   const { sections } = useExperienceContent();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState<{ top: boolean; left: boolean }>({
+    top: true,
+    left: true,
+  });
+
+  useEffect(() => {
+    const updatePosition = () => {
+      if (!cardRef.current) return;
+
+      const rect = cardRef.current.getBoundingClientRect();
+      const parentRect = cardRef.current.parentElement?.getBoundingClientRect();
+
+      if (!parentRect) return;
+
+      // Check if card would go out of viewport
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+
+      setPosition({
+        top: parentRect.top > viewportHeight / 2,
+        left: parentRect.left > viewportWidth / 2,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition);
+    };
+  }, []);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      ref={cardRef}
+      initial={{ opacity: 0, scale: 0.8, y: position.top ? 20 : -20 }}
       animate={
         isVisible
           ? { opacity: 1, scale: 1, y: 0 }
-          : { opacity: 0, scale: 0.8, y: 20 }
+          : { opacity: 0, scale: 0.8, y: position.top ? 20 : -20 }
       }
       transition={{ duration: 0.2 }}
-      className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full mt-[-20px] w-[400px] pointer-events-none z-10"
+      className={`absolute pointer-events-none z-100 w-[400px]
+                 ${position.top ? "bottom-full mb-4" : "top-full mt-4"}
+                 ${position.left ? "right-0" : "left-0"}`}
     >
       <div className="relative bg-gradient-to-br from-earth-dark via-earth-dark to-earth-brown/90 backdrop-blur-lg p-6 rounded-[2rem] shadow-xl">
         {/* Corner Highlights */}
@@ -45,7 +83,7 @@ export const ExperienceCard = ({
                   {experience.company}
                 </p>
               </div>
-              <span className="px-3 py-1 bg-earth-sand/5 rounded-full text-sm text-earth-sand">
+              <span className="px-3 py-1 bg-earth-sand/5 font-al rounded-full text-sm text-earth-sand">
                 {formatDuration(experience.duration)}
               </span>
             </div>
@@ -53,6 +91,24 @@ export const ExperienceCard = ({
         </div>
 
         <div className="space-y-4">
+          {/* Technologies */}
+          <div className="space-y-3">
+            <h5 className="text-earth-sand font-al text-sm flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-earth-sand rounded-full"></span>
+              {sections.details.techStack}
+            </h5>
+            <div className="flex flex-wrap gap-2 p-3 bg-earth-sand/5 rounded-xl">
+              {experience.technologies.map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 bg-earth-sand/10 rounded-full text-xs text-earth-sage font-al"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
           {/* Responsibilities */}
           <div className="space-y-3">
             <h5 className="text-earth-sand font-al text-sm flex items-center gap-2">
@@ -70,24 +126,6 @@ export const ExperienceCard = ({
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Technologies */}
-          <div className="space-y-3">
-            <h5 className="text-earth-sand font-al text-sm flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-earth-sand rounded-full"></span>
-              {sections.details.techStack}
-            </h5>
-            <div className="flex flex-wrap gap-2 p-3 bg-earth-sand/5 rounded-xl">
-              {experience.technologies.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 bg-earth-sand/10 rounded-full text-xs text-earth-sage font-al"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
 
