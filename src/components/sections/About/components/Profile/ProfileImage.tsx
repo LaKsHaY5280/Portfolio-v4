@@ -1,5 +1,7 @@
 "use client";
+import { lakshayGoyal } from "@/assets";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export const ProfileImage = () => (
   <motion.svg
@@ -23,12 +25,48 @@ export const ProfileImage = () => (
       className="opacity-10"
     />
 
-    {/* Profile Placeholder */}
-    <path
-      d="M150 200c-33.137 0-60-26.863-60-60s26.863-60 60-60 60 26.863 60 60-26.863 60-60 60zm0 40c40.077 0 120 20.039 120 60-.744 39.961-79.923 60-120 60s-119.256-20.039-120-60c-.744-39.961 79.923-60 120-60z"
-      fill="#959D90"
-      className="opacity-40"
-    />
+    <foreignObject x="25" y="25" width="250" height="350">
+      <div className="w-full h-full relative">
+        <Image
+          src={lakshayGoyal}
+          alt="Lakshay Goyal"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(215deg, 
+              rgba(34, 48, 48, 0.15),
+              rgba(82, 61, 53, 0.1),
+              rgba(149, 157, 144, 0.15)
+            )`,
+            backdropFilter: "contrast(1.05) brightness(0.98)",
+            mixBlendMode: "color-burn",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(
+              circle at 70% 30%,
+              rgba(232, 217, 205, 0.08),
+              transparent 60%
+            )`,
+            mixBlendMode: "soft-light",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            opacity: 0.02,
+            mixBlendMode: "overlay",
+          }}
+        />
+      </div>
+    </foreignObject>
 
     {/* Corner Triangles */}
     {/* Top Left Corner */}

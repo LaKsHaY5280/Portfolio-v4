@@ -12,6 +12,69 @@ export const DecorativeCircles = () => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
     >
+      {/* Translucent Background Effect */}
+      <defs>
+        <radialGradient
+          id="bgGradient"
+          cx="50%"
+          cy="50%"
+          r="50%"
+          fx="50%"
+          fy="50%"
+        >
+          <stop offset="0%" stopColor="#E8D9CD" stopOpacity="0.55" />
+          <stop offset="50%" stopColor="#BBA58F" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="#959D90" stopOpacity="0.55" />
+        </radialGradient>
+        <filter id="frost">
+          <feGaussianBlur stdDeviation="8" />
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 15 -8"
+          />
+        </filter>
+        <filter id="noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.75"
+            numOctaves="4"
+            stitchTiles="stitch"
+          />
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.08" />
+          </feComponentTransfer>
+        </filter>
+      </defs>
+
+      {/* Frosted Glass Background */}
+      <g className="opacity-90">
+        <circle
+          cx="80"
+          cy="80"
+          r="78"
+          fill="url(#bgGradient)"
+          filter="url(#frost)"
+        />
+        <circle
+          cx="80"
+          cy="80"
+          r="78"
+          fill="white"
+          className="mix-blend-soft-light opacity-20"
+        />
+        <circle
+          cx="80"
+          cy="80"
+          r="78"
+          fill="black"
+          filter="url(#noise)"
+          className="mix-blend-overlay opacity-30"
+        />
+      </g>
+
       {/* Background Circle */}
       <circle
         cx="80"
