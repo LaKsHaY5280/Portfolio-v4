@@ -5,7 +5,7 @@ export const myInfo: MyInfo = {
   role: "Web/App Developer",
   location: "India",
   email: "lakshay5280@gmail.com",
-  bio: "Someone focused on building user-friendly and effective applications. Experienced in creating solutions that address client needs through close collaboration and attention to detail.",
+  bio: "Expertise in frameworks like Next.js focused on creating scalable, user-centric applications. Proven track record of enhancing performance, boosting user engagement, and delivering impactful solutions in e-commerce, and digital services.",
   resumeUrl: "/resume.pdf",
   initials: "LG",
   socialLinks: {

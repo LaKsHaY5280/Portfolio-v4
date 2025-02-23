@@ -12,7 +12,7 @@ export const experienceContent: ExperienceContent = {
     timeline: {
       title: "Timeline",
       description: "A detailed look at my career milestones and roles over the years.",
-      hoverIndicator: "Hover over each timeline item for more details.",
+      hoverIndicator: "Click on each timeline item for more details.",
     },
     achievements: {
       title: "Key Achievements",

@@ -48,7 +48,7 @@ export const TimelineItem = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="timeline-item relative isolate w-full z-10"
+      className="timeline-item relative isolate w-full "
       style={{
         gridArea: `${index + 1} / ${startColumn} / ${
           index + 1
@@ -135,7 +135,7 @@ export const TimelineItem = ({
                               {experience.company}
                             </p>
                           </div>
-                          <span className="px-3 py-1 bg-earth-sand/5 rounded-full text-sm text-earth-sand">
+                          <span className="px-3 py-1 bg-earth-sand/5 rounded-full text-sm text-earth-sand font-al">
                             {formatDuration(experience.duration)}
                           </span>
                         </div>

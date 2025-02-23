@@ -2,11 +2,10 @@ import { myInfo } from "@/data/_myInfo";
 
 export const aboutContent = {
   introduction: {
-    title: `I'm ${myInfo.name.split(" ")[0]}. A full-stack developer, innovator, and tech enthusiast.`,
+    title: `I'm Lakshay. A web developer, problem-solver, and technology enthusiast.`,
     bio: [
-      "I specialize in designing and developing web and mobile solutions that are both functional and aesthetically pleasing. My expertise spans across frontend and backend technologies, with a strong focus on delivering high-quality user experiences.",
-      "With over 5 years of experience in the tech industry, I've worked on diverse projects, from building scalable platforms to creating custom applications that address unique business needs.",
-      `Based in ${myInfo.location}, I thrive at the intersection of creativity and logic, leveraging cutting-edge technologies to solve complex problems effectively.`,
+      "I specialize in designing and developing scalable web solutions that prioritize performance and user engagement. My technical expertise includes frameworks and tools like Next.js, React.js, and TailwindCSS, enabling me to deliver solutions that are efficient, secure, and visually appealing.",
+      "Through diverse projects in education, e-commerce, and digital services, I've created platforms that drive measurable results, such as increasing user satisfaction by 96.73% and boosting e-commerce sales by 92%. Based in India, I am passionate about leveraging modern technologies to craft impactful digital experiences and solve complex challenges effectively.",
     ],
   },
   profile: {
@@ -15,19 +14,21 @@ export const aboutContent = {
   },
   stats: [
     {
-      years: "5+",
-      area: "Years Full Stack Development",
-      details: "Expert in React, Node.js, and scalable cloud solutions.",
+      years: "4+",
+      area: "Years of Web Development",
+      details: "Specialized in React, Next.js, and full-stack solutions.",
     },
     {
-      years: "10+",
+      years: "3+",
       area: "Projects Delivered",
-      details: "Ranging from e-commerce platforms to real-time applications.",
+      details:
+        "Including e-commerce platforms, social media applications, and agency websites.",
     },
     {
-      years: "10+",
+      years: "5+",
       area: "Technologies Mastered",
-      details: "Constantly evolving skill set to meet modern standards.",
+      details:
+        "Expertise in frameworks like Next.js, TailwindCSS, and tools like Figma and Git.",
     },
   ],
   cta: {
