@@ -95,7 +95,7 @@ const Hero = () => {
     <section className="h-screen relative flex items-center justify-center section-padding bg-gradient-to-b from-earth-light to-earth-cream">
       <div
         ref={containerRef}
-        className="max-w-7xl w-full mx-auto container-padding"
+        className="max-w-6xl w-full mx-auto container-padding"
       >
         <div className="flex flex-col items-center justify-center">
           <div className="text-center">

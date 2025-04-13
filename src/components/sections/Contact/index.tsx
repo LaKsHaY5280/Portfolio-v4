@@ -10,7 +10,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="container mx-auto max-w-7xl py-24 sm:py-32"
+      className="container mx-auto max-w-6xl py-24 sm:py-32  px-4 sm:px-6 lg:px-8 relative"
     >
       <motion.h2
         className="text-4xl font-gemola text-earth-dark text-center mb-16"

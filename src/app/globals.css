@@ -267,3 +267,6 @@ body {
 .text-responsive-5xl {
   font-size: var(--text-5xl);
 }
+
+
+.text-2xs { font-size: 0.625rem; line-height: 0.75rem; }

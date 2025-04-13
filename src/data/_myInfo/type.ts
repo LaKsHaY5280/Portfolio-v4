@@ -2,6 +2,7 @@ export interface SocialLinks {
   github: string;
   linkedin: string;
   twitter: string;
+  instagram?: string;
 }
 
 export interface ButtonLabels {

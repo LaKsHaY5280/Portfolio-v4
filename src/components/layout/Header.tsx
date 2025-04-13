@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLayoutContent } from "@/hooks/layout";
 import { useMyInfo } from "@/hooks/_myInfo/useMyInfo";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -21,213 +22,105 @@ const MobileMenu = ({
   activeSection,
   setActiveSection,
 }: MobileMenuProps) => {
+  const { socialLinks, name } = useMyInfo();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const socialLinksArray = [
+    { name: "GitHub", icon: <FaGithub className="w-5 h-5" />, url: socialLinks.github },
+    { name: "LinkedIn", icon: <FaLinkedin className="w-5 h-5" />, url: socialLinks.linkedin },
+    { name: "Twitter", icon: <FaTwitter className="w-5 h-5" />, url: socialLinks.twitter },
+  ];
+
+  if (socialLinks.instagram) {
+    socialLinksArray.push({
+      name: "Instagram",
+      icon: <FaInstagram className="w-5 h-5" />,
+      url: socialLinks.instagram,
+    });
+  }
+
   return (
-    <motion.div
-      className="md:hidden fixed inset-0 bg-white"
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: isOpen ? 1 : 0,
-      }}
-      transition={{ duration: 0.3 }}
+    <div
+      className={`fixed inset-0 top-0 left-0 w-screen h-screen md:hidden ${
+        isOpen ? "block" : "hidden"
+      }`}
       style={{
-        zIndex: 150,
-        pointerEvents: isOpen ? "auto" : "none",
-        backgroundColor: "#ffffff",
+        zIndex: 9999,
+        position: "fixed",
       }}
     >
-      <div className="relative flex flex-col h-screen">
-        {/* Background */}
-        <motion.div
-          className="absolute inset-0 overflow-hidden bg-white"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+      {/* Full screen background with gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f2efe8] to-[#e8d9cd]" />
+
+      {/* Close button */}
+      <motion.button
+        className="absolute top-6 right-6 z-10 p-2.5 rounded-full bg-earth-sand/10 text-earth-dark border border-earth-dark/10"
+        whileTap={{ scale: 0.95 }}
+        onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isOpen ? 1 : 0 }}
+        transition={{ delay: 0.1 }}
+        aria-label="Close menu"
+      >
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          {/* Base gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-earth-sand/10 to-white" />
-
-          {/* Animated gradient orbs */}
-          <motion.div
-            className="absolute top-0 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-earth-sand/30 via-earth-sand/20 to-transparent blur-3xl"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={
-              isOpen
-                ? {
-                    opacity: 1,
-                    scale: 1,
-                    x: [0, 20, 0],
-                    y: [0, 30, 0],
-                  }
-                : { opacity: 0, scale: 0.8 }
-            }
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              opacity: { duration: 0.5, delay: 0.3 },
-              scale: { duration: 0.5, delay: 0.3 },
-            }}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
           />
-          <motion.div
-            className="absolute bottom-0 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-l from-earth-sand/30 via-earth-sand/20 to-transparent blur-3xl"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={
-              isOpen
-                ? {
-                    opacity: 1,
-                    scale: 1,
-                    x: [0, -20, 0],
-                    y: [0, -30, 0],
-                  }
-                : { opacity: 0, scale: 0.8 }
-            }
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              opacity: { duration: 0.5, delay: 0.4 },
-              scale: { duration: 0.5, delay: 0.4 },
-            }}
-          />
+        </svg>
+      </motion.button>
 
-          {/* Grid pattern */}
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isOpen ? 0.05 : 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgb(200, 190, 180) 1px, transparent 1px),
-                linear-gradient(to bottom, rgb(200, 190, 180) 1px, transparent 1px)
-              `,
-              backgroundSize: "40px 40px",
-            }}
-          />
-
-          {/* Animated lines */}
-          <svg
-            className="absolute inset-0 w-full h-full"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <motion.path
-              d="M0 200 C 200 150, 400 250, 600 200 S 800 150, 1000 200"
-              stroke="rgba(200, 190, 180, 0.2)"
-              strokeWidth="1"
-              fill="none"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={
-                isOpen
-                  ? { pathLength: 1, opacity: 1 }
-                  : { pathLength: 0, opacity: 0 }
-              }
-              transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-            />
-            <motion.path
-              d="M0 400 C 200 350, 400 450, 600 400 S 800 350, 1000 400"
-              stroke="rgba(200, 190, 180, 0.2)"
-              strokeWidth="1"
-              fill="none"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={
-                isOpen
-                  ? { pathLength: 1, opacity: 1 }
-                  : { pathLength: 0, opacity: 0 }
-              }
-              transition={{ duration: 1.5, delay: 0.7, ease: "easeInOut" }}
-            />
-          </svg>
-
-          {/* Floating dots */}
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 rounded-full bg-earth-sand/30"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={
-                isOpen
-                  ? {
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                      y: ["0%", "100%"],
-                    }
-                  : { opacity: 0, scale: 0 }
-              }
-              transition={{
-                duration: 3 + i * 0.5,
-                repeat: Infinity,
-                delay: i * 0.2,
-                ease: "easeInOut",
-              }}
-              style={{
-                left: `${20 + i * 15}%`,
-                top: "0%",
-              }}
-            />
-          ))}
-
-          {/* Radial gradient overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 50%, transparent 0%, rgba(255, 255, 255, 0.9) 100%)",
-            }}
-          />
-        </motion.div>
-
-        {/* Content Container */}
-        <div className="relative flex flex-col h-screen z-10">
+      {/* Content Container */}
+      <motion.div
+        className="absolute inset-0 flex flex-col w-full h-full overflow-y-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="relative flex flex-col justify-between h-full pt-16 pb-8 px-8">
           {/* Header */}
-          {/* <div className="flex items-center justify-between py-4 px-6 border-b border-earth-sand/10 relative z-10 ">
-            <motion.a
-              href="#"
-              className="text-xl font-gemola text-earth-dark"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -20 }}
-              transition={{ delay: 0.1 }}
-            >
-              Menu
-            </motion.a>
-            <motion.button
-              className="p-2 -mr-2 text-earth-dark/60 hover:text-earth-dark rounded-full hover:bg-earth-sand/5 transition-colors"
-              onClick={onClose}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 20 }}
-              transition={{ delay: 0.1 }}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </motion.button>
-          </div> */}
+          <motion.div
+            className="text-center mb-6"
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -15 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <h2 className="font-gemola text-3xl text-earth-dark">{name}</h2>
+            <div className="h-px w-24 bg-earth-sand/40 mx-auto mt-3"></div>
+          </motion.div>
 
-          {/* Navigation */}
-          <div className="mt-auto px-6">
-            <nav className="space-y-3">
+          {/* Navigation Links - Simplified & Centered */}
+          <div className="flex-1 flex flex-col justify-center">
+            <nav className="flex flex-col gap-5">
               {navigation.map((item, index) => (
                 <motion.div
                   key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{
                     opacity: isOpen ? 1 : 0,
-                    y: isOpen ? 0 : 20,
+                    x: isOpen ? 0 : -10,
                   }}
                   transition={{
-                    delay: 0.2 + index * 0.1,
-                    duration: 0.4,
-                    ease: [0.36, 0, 0.66, 1],
+                    delay: 0.15 + index * 0.05,
+                    duration: 0.3,
                   }}
                 >
                   <motion.a
@@ -243,110 +136,67 @@ const MobileMenu = ({
                         setActiveSection(item.label.toLowerCase());
                       }
                     }}
-                    className={`group relative flex items-center justify-between py-6 transition-colors
-                      ${
-                        activeSection === item.label.toLowerCase()
-                          ? "text-earth-dark"
-                          : "text-earth-dark/60 hover:text-earth-dark"
-                      }`}
-                    whileHover="hover"
+                    className="block py-2.5 text-2xl transition-colors text-center"
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <div className="flex flex-col">
-                      <span className="text-3xl font-al">{item.label}</span>
-                      <motion.div
-                        className="h-px bg-earth-sand/40 mt-2"
-                        initial={{ scaleX: 0 }}
-                        animate={{
-                          scaleX:
-                            activeSection === item.label.toLowerCase() ? 1 : 0,
-                        }}
-                        variants={{
-                          hover: { scaleX: 1 },
-                        }}
-                        transition={{ duration: 0.3 }}
-                        style={{ transformOrigin: "left" }}
-                      />
-                    </div>
-                    <motion.div
-                      className="text-earth-dark/40"
-                      variants={{
-                        hover: { x: 8 },
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    <span className={`relative font-al inline-block ${
+                      activeSection === item.label.toLowerCase()
+                        ? "text-earth-dark font-medium"
+                        : "text-earth-brown/80"
+                    }`}>
+                      {item.label}
+                      {activeSection === item.label.toLowerCase() && (
+                        <motion.span
+                          className="absolute -bottom-1 left-0 right-0 h-[2px] bg-earth-sand"
+                          layoutId="activeMobileNav"
                         />
-                      </svg>
-                    </motion.div>
+                      )}
+                    </span>
                   </motion.a>
                 </motion.div>
               ))}
             </nav>
           </div>
 
-          {/* Footer with CTA */}
-          <div className="mb-auto border-t border-earth-sand/10">
+          {/* Footer - Action Button & Social Links */}
+          <div className="mt-auto">
+            {/* Action Button */}
+            <motion.a
+              href={button.href}
+              className="block font-gemola w-full py-3.5 px-6 bg-earth-dark text-white text-center rounded-lg font-medium text-lg mb-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 10 }}
+              transition={{ delay: 0.35 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {button.label}
+            </motion.a>
+
+            {/* Social Links - Now using myInfo data and React Icons */}
             <motion.div
-              className="p-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: isOpen ? 1 : 0,
-                y: isOpen ? 0 : 20,
-              }}
+              className="flex justify-center items-center gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isOpen ? 1 : 0 }}
               transition={{ delay: 0.4 }}
             >
-              <motion.a
-                href={button.href}
-                className="relative w-full inline-flex items-center justify-center gap-3 px-6 py-5 text-lg font-al
-                        bg-earth-dark text-white rounded-2xl transition-colors overflow-hidden group"
-                whileHover="hover"
-                whileTap={{ scale: 0.98 }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-earth-sand/20 via-earth-sand/10 to-transparent"
-                  initial={{ x: "-100%" }}
-                  variants={{
-                    hover: { x: "100%" },
-                  }}
-                  transition={{ duration: 0.8 }}
-                />
-                <span className="relative">{button.label}</span>
-                <motion.svg
-                  className="w-5 h-5 relative"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 0.5,
-                  }}
+              {socialLinksArray.map((social, index) => (
+                <motion.a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-full bg-earth-light/50 text-earth-brown/80 hover:bg-earth-sand/20 hover:text-earth-dark transition-colors"
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </motion.svg>
-              </motion.a>
+                  {social.icon}
+                </motion.a>
+              ))}
             </motion.div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
@@ -411,33 +261,11 @@ const Header = () => {
           <div className="relative">
             <motion.a
               href="#"
-              className="text-xl font-gemola text-earth-dark relative inline-block group"
-              whileHover="hover"
-              initial="initial"
+              className="text-xl font-gemola text-earth-dark relative inline-block"
+              whileHover={{ y: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
-              <div className="relative overflow-hidden">
-                <motion.div
-                  className="relative z-10 flex items-center"
-                  variants={{
-                    initial: { width: "2.5rem" },
-                    hover: { width: "auto" },
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                >
-                  <span className="opacity-100 group-hover:opacity-0 transition-opacity duration-300 absolute">
-                    {initials}
-                  </span>
-                  <motion.span
-                    className="opacity-0 group-hover:opacity-100 whitespace-nowrap transition-all duration-300"
-                    variants={{
-                      initial: { x: 20 },
-                      hover: { x: 0 },
-                    }}
-                  >
-                    {name}
-                  </motion.span>
-                </motion.div>
-              </div>
+              <span className="whitespace-nowrap">{name}</span>
             </motion.a>
           </div>
 
