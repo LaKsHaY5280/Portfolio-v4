@@ -18,13 +18,13 @@ export const layoutContent: LayoutContent = {
     links: [
       { label: "GitHub", href: myInfo.socialLinks.github },
       { label: "LinkedIn", href: myInfo.socialLinks.linkedin },
-      { label: "Twitter", href: myInfo.socialLinks.twitter },
+      { label: "Instagram", href: myInfo.socialLinks.instagram },
     ],
     buttons: [
       { label: "Download Resume", href: myInfo.resumeUrl },
       {
         label: "View Source",
-        href: "https://github.com/yourusername/portfolio",
+        href: "https://github.com/LaKsHaY5280/portfolio",
       },
     ],
   },

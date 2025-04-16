@@ -9,7 +9,7 @@ export interface FooterContent {
   copyright: string;
   links: {
     label: string;
-    href: string;
+    href?: string;
   }[];
   buttons: {
     label: string;

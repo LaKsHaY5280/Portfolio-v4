@@ -2,13 +2,26 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useSkills, useSkillsContent } from "@/hooks/skills";
-import { SkillCategory } from "@/data/skills/types";
+import { SkillCategory, MasteryLevel } from "@/data/skills/types";
 import SkillCard from "./components/SkillCard";
 import MasteryRing from "./components/MasteryRing";
 
 const Skills = () => {
   const skills = useSkills();
-  const { header, categories } = useSkillsContent();
+  const {
+    header,
+    categories,
+    metrics,
+    metricValues,
+    viewOptions,
+    masteryLevels: masteryLevelConfig,
+    categoryPriority,
+    timeline: timelineConfig,
+    coreCompetencies,
+    expertiseLevels,
+    emptyState,
+    filterMessages,
+  } = useSkillsContent();
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [activeView, setActiveView] = useState<
     "cards" | "mastery" | "timeline"
@@ -60,15 +73,21 @@ const Skills = () => {
   // For peer developers: Skills grouped by mastery level
   const masteryLevels = {
     expert: skills.flatMap((category) =>
-      category.items.filter((skill) => skill.proficiency >= 85)
+      category.items.filter(
+        (skill) => skill.proficiency >= masteryLevelConfig[0].threshold
+      )
     ),
     advanced: skills.flatMap((category) =>
       category.items.filter(
-        (skill) => skill.proficiency >= 70 && skill.proficiency < 85
+        (skill) =>
+          skill.proficiency >= masteryLevelConfig[1].threshold &&
+          skill.proficiency < masteryLevelConfig[0].threshold
       )
     ),
     competent: skills.flatMap((category) =>
-      category.items.filter((skill) => skill.proficiency < 70)
+      category.items.filter(
+        (skill) => skill.proficiency < masteryLevelConfig[1].threshold
+      )
     ),
   };
 
@@ -88,33 +107,6 @@ const Skills = () => {
       masteryLevels.competent = allSkills.slice(0, 3);
     }
   }
-
-  // For clients: Simplified skill categories with visual impact
-  const clientFocusedSkills = [
-    {
-      name: "Frontend",
-      count:
-        skills.find((c) => c.category === "Frontend Development")?.items
-          .length || 0,
-    },
-    {
-      name: "Backend",
-      count:
-        skills.find((c) => c.category === "Backend Development")?.items
-          .length || 0,
-    },
-    {
-      name: "Mobile",
-      count:
-        skills.find((c) => c.category === "Mobile Development")?.items.length ||
-        0,
-    },
-    {
-      name: "DevOps",
-      count:
-        skills.find((c) => c.category === "DevOps & Tools")?.items.length || 0,
-    },
-  ];
 
   // Filter skills based on active filter
   const filteredSkills =
@@ -170,7 +162,7 @@ const Skills = () => {
         >
           <div className="text-center mb-8">
             <span className="inline-block px-4 py-1.5 bg-earth-sand/10 text-earth-brown rounded-full text-sm font-al mb-4">
-              TECHNICAL PROFICIENCY
+              {header.label}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-gemola text-earth-dark mb-4">
               {header.title}
@@ -190,85 +182,36 @@ const Skills = () => {
           >
             {/* Metric cards */}
             <MetricCard
-              value={totalSkills}
-              label="Technologies"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-6 h-6"
-                >
-                  <path d="m18 16 4-4-4-4" />
-                  <path d="m6 8-4 4 4 4" />
-                  <path d="m14.5 4-5 16" />
-                </svg>
+              value={
+                metricValues.technologies === null
+                  ? totalSkills
+                  : metricValues.technologies
               }
+              label={metrics.technologies.label}
+              icon={metrics.technologies.icon}
             />
             <MetricCard
-              value={`${avgMastery}%`}
-              label="Mastery Level"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-6 h-6"
-                >
-                  <path d="M12 2v20" />
-                  <path d="M2 12h20" />
-                  <path d="m4.93 4.93 14.14 14.14" />
-                  <path d="m19.07 4.93-14.14 14.14" />
-                </svg>
+              value={
+                metricValues.masteryLevel === null
+                  ? `${avgMastery}%`
+                  : `${metricValues.masteryLevel}%`
               }
+              label={metrics.masteryLevel.label}
+              icon={metrics.masteryLevel.icon}
             />
             <MetricCard
-              value={masteryLevels.expert.length}
-              label="Expert Skills"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-6 h-6"
-                >
-                  <path d="M12 20h9" />
-                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-                </svg>
+              value={
+                metricValues.expertSkills === null
+                  ? masteryLevels.expert.length
+                  : metricValues.expertSkills
               }
+              label={metrics.expertSkills.label}
+              icon={metrics.expertSkills.icon}
             />
             <MetricCard
-              value="5+"
-              label="Years Practice"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-6 h-6"
-                >
-                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                  <line x1="16" x2="16" y1="2" y2="6" />
-                  <line x1="8" x2="8" y1="2" y2="6" />
-                  <line x1="3" x2="21" y1="10" y2="10" />
-                </svg>
-              }
+              value={metricValues.yearsPractice}
+              label={metrics.yearsPractice.label}
+              icon={metrics.yearsPractice.icon}
             />
           </motion.div>
         </motion.div>
@@ -276,67 +219,15 @@ const Skills = () => {
         {/* View toggle - For different audience preferences */}
         <div className="mb-8 flex justify-center">
           <div className="inline-flex bg-earth-light/50 backdrop-blur-sm p-1 rounded-xl">
-            <ViewToggleButton
-              active={activeView === "cards"}
-              onClick={() => setActiveView("cards")}
-              label="Detailed"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-4 h-4"
-                >
-                  <rect width="7" height="7" x="3" y="3" rx="1" />
-                  <rect width="7" height="7" x="14" y="3" rx="1" />
-                  <rect width="7" height="7" x="14" y="14" rx="1" />
-                  <rect width="7" height="7" x="3" y="14" rx="1" />
-                </svg>
-              }
-            />
-            <ViewToggleButton
-              active={activeView === "mastery"}
-              onClick={() => setActiveView("mastery")}
-              label="Mastery"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-4 h-4"
-                >
-                  <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-                </svg>
-              }
-            />
-            <ViewToggleButton
-              active={activeView === "timeline"}
-              onClick={() => setActiveView("timeline")}
-              label="Journey"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-4 h-4"
-                >
-                  <path d="M3 3v18h18" />
-                  <path d="m19 9-5 5-4-4-3 3" />
-                </svg>
-              }
-            />
+            {viewOptions.map((option) => (
+              <ViewToggleButton
+                key={option.id}
+                active={activeView === option.id}
+                onClick={() => setActiveView(option.id)}
+                label={option.label}
+                icon={option.icon}
+              />
+            ))}
           </div>
         </div>
 
@@ -365,16 +256,16 @@ const Skills = () => {
             {filteredSkills.length === 0 ? (
               <div className="max-w-lg mx-auto text-center py-12">
                 <h3 className="text-xl font-gemola text-earth-dark mb-4">
-                  No Skills Found
+                  {emptyState.title}
                 </h3>
                 <p className="text-earth-brown/80 font-al mb-6">
-                  No skills found for this filter category.
+                  {emptyState.description}
                 </p>
                 <button
                   onClick={() => setActiveFilter("all")}
                   className="px-4 py-2 bg-earth-sand/10 hover:bg-earth-sand/20 rounded-lg text-earth-brown transition-all"
                 >
-                  View All Skills
+                  {emptyState.buttonText}
                 </button>
               </div>
             ) : (
@@ -392,17 +283,8 @@ const Skills = () => {
                       // Sort all categories by priority first
                       const sortedCategories = [...filteredSkills].sort(
                         (a, b) => {
-                          const orderPriority: Record<string, number> = {
-                            "Frontend Development": 1,
-                            "DevOps & Tools": 2,
-                            "Backend Development": 3,
-                            "Programming Languages": 4,
-                            "Soft Skills": 5,
-                            "Mobile Development": 6,
-                          };
-
-                          const priorityA = orderPriority[a.category] || 99;
-                          const priorityB = orderPriority[b.category] || 99;
+                          const priorityA = categoryPriority[a.category] || 99;
+                          const priorityB = categoryPriority[b.category] || 99;
                           return priorityA - priorityB;
                         }
                       );
@@ -469,11 +351,21 @@ const Skills = () => {
         )}
 
         {activeView === "mastery" && (
-          <MasteryView masteryLevels={filterMasteryLevels(masteryLevels)} />
+          <MasteryView
+            masteryLevels={filterMasteryLevels(masteryLevels)}
+            masteryLevelConfig={masteryLevelConfig}
+            expertiseLevels={expertiseLevels}
+            noDataMessage={filterMessages.masteryNoData}
+          />
         )}
 
         {activeView === "timeline" && (
-          <TimelineView skills={filteredSkills} activeFilter={activeFilter} />
+          <TimelineView
+            skills={filteredSkills}
+            activeFilter={activeFilter}
+            timelineConfig={timelineConfig}
+            noDataMessage={filterMessages.timelineNoData}
+          />
         )}
 
         {/* Skills summary for HR/recruiters - Quick reference for core competencies */}
@@ -485,7 +377,7 @@ const Skills = () => {
           className="mt-16 bg-earth-light/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-earth-sand/10"
         >
           <h3 className="text-xl sm:text-2xl font-gemola text-earth-dark mb-4">
-            Core Competencies
+            {coreCompetencies.title}
           </h3>
           <div className="flex flex-wrap gap-2">
             {topSkills.map((skill, index) => (
@@ -555,7 +447,7 @@ const FilterButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-1.5 rounded-full text-sm transition-all duration-200 ${
+    className={`px-4 py-1.5 rounded-full text-sm font-al transition-all duration-200 ${
       active
         ? "bg-earth-sand text-earth-light font-semibold"
         : "bg-earth-light/40 text-earth-brown hover:bg-earth-light/70"
@@ -579,7 +471,7 @@ const ViewToggleButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`px-3 py-1.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-2 ${
+    className={`px-3 py-1.5 rounded-lg text-sm font-al transition-all duration-200 flex items-center gap-2 ${
       active
         ? "bg-earth-dark text-earth-light"
         : "text-earth-dark hover:bg-earth-light/80"
@@ -591,7 +483,17 @@ const ViewToggleButton = ({
 );
 
 // Mastery view - For peer developers who appreciate craftsmanship
-const MasteryView = ({ masteryLevels }: { masteryLevels: any }) => {
+const MasteryView = ({
+  masteryLevels,
+  masteryLevelConfig,
+  expertiseLevels,
+  noDataMessage,
+}: {
+  masteryLevels: any;
+  masteryLevelConfig: MasteryLevel[];
+  expertiseLevels: { title: string };
+  noDataMessage: { title: string; description: string; buttonText: string };
+}) => {
   // Check if any of the mastery levels have skills
   const hasExpertSkills = masteryLevels.expert.length > 0;
   const hasAdvancedSkills = masteryLevels.advanced.length > 0;
@@ -602,10 +504,10 @@ const MasteryView = ({ masteryLevels }: { masteryLevels: any }) => {
     return (
       <div className="max-w-lg mx-auto text-center py-12">
         <h3 className="text-xl font-gemola text-earth-dark mb-4">
-          No Skills Found
+          {noDataMessage.title}
         </h3>
         <p className="text-earth-brown/80 font-al mb-6">
-          No skills found for this filter category in mastery view.
+          {noDataMessage.description}
         </p>
         <button
           onClick={() =>
@@ -615,7 +517,7 @@ const MasteryView = ({ masteryLevels }: { masteryLevels: any }) => {
           }
           className="px-4 py-2 bg-earth-sand/10 hover:bg-earth-sand/20 rounded-lg text-earth-brown transition-all"
         >
-          View All Skills
+          {noDataMessage.buttonText}
         </button>
       </div>
     );
@@ -626,29 +528,29 @@ const MasteryView = ({ masteryLevels }: { masteryLevels: any }) => {
       {/* Expert Skills with special visuals */}
       <div className="mb-12">
         <h3 className="text-xl sm:text-2xl font-gemola text-earth-dark text-center mb-6">
-          Expertise Levels
+          {expertiseLevels.title}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {hasExpertSkills && (
             <MasteryCategory
-              title="Expert"
+              title={masteryLevelConfig[0].title}
               skills={masteryLevels.expert}
-              color="#BBA58F"
+              color={masteryLevelConfig[0].color}
             />
           )}
           {hasAdvancedSkills && (
             <MasteryCategory
-              title="Advanced"
+              title={masteryLevelConfig[1].title}
               skills={masteryLevels.advanced}
-              color="#959D90"
+              color={masteryLevelConfig[1].color}
             />
           )}
           {hasCompetentSkills && (
             <MasteryCategory
-              title="Competent"
+              title={masteryLevelConfig[2].title}
               skills={masteryLevels.competent}
-              color="#E8D9CD"
+              color={masteryLevelConfig[2].color}
             />
           )}
         </div>
@@ -715,54 +617,28 @@ const MasteryCategory = ({
 const TimelineView = ({
   skills,
   activeFilter,
+  timelineConfig,
+  noDataMessage,
 }: {
   skills: any[];
   activeFilter: string;
+  timelineConfig: {
+    title: string;
+    newTechnologies: string;
+    data: { year: number; skills: string[] }[];
+    categorySkillMap: { [key: string]: string[] };
+  };
+  noDataMessage: { title: string; description: string; buttonText: string };
 }) => {
-  // Mock learning timeline data
-  const timelineData = [
-    { year: 2018, skills: ["HTML", "CSS", "JavaScript", "React.js"] },
-    { year: 2019, skills: ["Node.js", "Express.js", "MongoDB"] },
-    { year: 2020, skills: ["TypeScript", "Next.js", "PostgreSQL"] },
-    { year: 2021, skills: ["Flutter", "React Native", "AWS"] },
-    { year: 2022, skills: ["GSAP", "Framer Motion", "TailwindCSS", "Docker"] },
-    { year: 2023, skills: ["Shadcn", "Django", "CI/CD"] },
-  ];
-
   // Apply filtering based on the activeFilter
   const filteredTimelineData = (() => {
-    if (activeFilter === "all") return timelineData;
+    if (activeFilter === "all") return timelineConfig.data;
 
-    // Map skill categories to timeline skills (add more mappings as needed)
-    const categoryToSkills: Record<string, string[]> = {
-      "Frontend Development": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React.js",
-        "GSAP",
-        "Framer Motion",
-        "TailwindCSS",
-        "Next.js",
-        "Shadcn",
-      ],
-      "Backend Development": [
-        "Node.js",
-        "Express.js",
-        "MongoDB",
-        "PostgreSQL",
-        "Django",
-      ],
-      "Mobile Development": ["Flutter", "React Native"],
-      "DevOps & Tools": ["AWS", "Docker", "CI/CD"],
-      "Programming Languages": ["JavaScript", "TypeScript"],
-      "Soft Skills": [], // Add any soft skills if needed
-    };
-
-    const relevantSkills = categoryToSkills[activeFilter] || [];
+    // Get relevant skills for the selected category
+    const relevantSkills = timelineConfig.categorySkillMap[activeFilter] || [];
 
     // Filter timeline periods to only include those with relevant skills
-    return timelineData
+    return timelineConfig.data
       .map((period) => ({
         ...period,
         skills: period.skills.filter((skill) =>
@@ -779,10 +655,10 @@ const TimelineView = ({
     return (
       <div className="max-w-lg mx-auto text-center py-12">
         <h3 className="text-xl font-gemola text-earth-dark mb-4">
-          No Timeline Data
+          {noDataMessage.title}
         </h3>
         <p className="text-earth-brown/80 font-al mb-6">
-          No timeline data available for this filter category.
+          {noDataMessage.description}
         </p>
         <button
           onClick={() =>
@@ -792,7 +668,7 @@ const TimelineView = ({
           }
           className="px-4 py-2 bg-earth-sand/10 hover:bg-earth-sand/20 rounded-lg text-earth-brown transition-all"
         >
-          View All Skills
+          {noDataMessage.buttonText}
         </button>
       </div>
     );
@@ -801,7 +677,7 @@ const TimelineView = ({
   return (
     <div className="max-w-4xl mx-auto">
       <h3 className="text-xl sm:text-2xl font-gemola text-earth-dark text-center mb-8">
-        Skill Acquisition Journey
+        {timelineConfig.title}
         {activeFilter !== "all" && (
           <span className="text-earth-brown/70 text-lg block mt-1">
             Filter: {activeFilter.replace(" Development", "")}
@@ -845,7 +721,7 @@ const TimelineView = ({
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <h5 className="text-lg font-al text-earth-brown mb-2">
-                  New Technologies
+                  {timelineConfig.newTechnologies}
                 </h5>
                 <div
                   className={`flex flex-wrap gap-2 ${
@@ -871,36 +747,15 @@ const TimelineView = ({
 };
 
 // Update the SkillCategoryColumn component
-
 const SkillCategoryColumn = ({
   categories,
 }: {
   categories: SkillCategory[];
 }) => {
-  // Create a manually reorganized copy based on category names
-  const reorderedCategories = [...categories].sort((a, b) => {
-    // Custom sort function to ensure specific ordering
-    const orderPriority: Record<string, number> = {
-      "Frontend Development": 1,
-      "DevOps & Tools": 2,
-      "Backend Development": 3,
-      "Programming Languages": 4,
-      "Soft Skills": 5,
-      "Mobile Development": 6,
-    };
-
-    // Get priority or default to a high number
-    const priorityA = orderPriority[a.category] || 99;
-    const priorityB = orderPriority[b.category] || 99;
-
-    // Sort by priority
-    return priorityA - priorityB;
-  });
-
-
+  // Use the categories directly, they're already sorted by the parent component
   return (
     <div className="flex flex-col gap-8">
-      {reorderedCategories.map((skillCategory, categoryIndex) => (
+      {categories.map((skillCategory, categoryIndex) => (
         <motion.div
           key={skillCategory.category}
           initial={{ opacity: 0, y: 20 }}

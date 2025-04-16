@@ -30,14 +30,4 @@ export const experience: Experience[] = [
     ],
     technologies: ["Next.js", "Shopify", "SEO", "Backend Development"],
   },
-  {
-    company: "Hello Study Global",
-    role: "Web Developer Intern",
-    duration: "June 2023 – July 2023",
-    responsibilities: [
-      "Engineered a platform using Next.js and Python for students to curate university preferences, achieving a 96.73% user satisfaction rate.",
-      "Optimized the client onboarding process via A/B testing and UI/UX enhancements, leading to a 250% increase in successful client deals.",
-    ],
-    technologies: ["Next.js", "Python", "UI/UX", "A/B Testing"],
-  },
 ];

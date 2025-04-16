@@ -20,13 +20,13 @@ export const aboutContent = {
     },
     {
       years: "3+",
-      area: "Projects Delivered",
+      area: "Years of Project Experience",
       details:
         "Including e-commerce platforms, social media applications, and agency websites.",
     },
     {
       years: "5+",
-      area: "Technologies Mastered",
+      area: "Years Working with Technologies",
       details:
         "Expertise in frameworks like Next.js, TailwindCSS, and tools like Figma and Git.",
     },

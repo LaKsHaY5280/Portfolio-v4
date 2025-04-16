@@ -14,10 +14,25 @@ export interface Experience {
   technologies: string[];
 }
 
+export interface Metric {
+  value: string | number;
+  label: string;
+  icon: ReactNode;
+}
+
 export interface ExperienceContent {
   header: {
     title: string;
     subtitle: string;
+    description: string;
+    label?: string;
+  };
+  metrics: Metric[];
+  technicalProficiency?: {
+    title: string;
+  };
+  technicalSummary?: {
+    title: string;
     description: string;
   };
   sections: {

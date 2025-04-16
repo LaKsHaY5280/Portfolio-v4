@@ -24,7 +24,6 @@ export const CTA = () => {
         {resumeUrl && (
           <motion.a
             href={resumeUrl}
-            target="_blank"
             rel="noopener noreferrer"
             className="btn-primary tracking-wide w-full sm:w-auto flex items-center justify-center gap-2 text-responsive-base"
             variants={buttonVariants}

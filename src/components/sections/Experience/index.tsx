@@ -52,7 +52,7 @@ const Experience = () => {
           className="text-center mb-10 sm:mb-12 md:mb-16"
         >
           <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-earth-sand/10 text-earth-brown rounded-full text-xs sm:text-sm font-al mb-3 sm:mb-4">
-            PROFESSIONAL JOURNEY
+            {header.label || "WORK EXPERIENCE"}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-gemola text-earth-dark mb-3 sm:mb-4">
             {header.subtitle}
@@ -63,7 +63,7 @@ const Experience = () => {
         </motion.div>
 
         {/* Key metrics section - for recruiters */}
-        <MetricsOverviewOptimized experience={experience} />
+        <MetricsOverviewOptimized />
 
         {/* Main experience timeline */}
         <ExperienceTimeline experience={experience} />
@@ -78,95 +78,10 @@ const Experience = () => {
   );
 };
 
-// Replace the MetricsOverview component with this optimized version
-const MetricsOverviewOptimized = ({
-  experience,
-}: {
-  experience: ExperienceType[];
-}) => {
-  // Calculate total experience time
-  const calculateTotalMonths = () => {
-    let totalMonths = 0;
-    experience.forEach((exp) => {
-      const [start, end] = exp.duration.split(" – ");
-      const startDate = new Date(start);
-      const endDate =
-        end.toLowerCase() === "present" ? new Date() : new Date(end);
+// Update the MetricsOverviewOptimized component to use metrics from content
 
-      const months =
-        (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-        (endDate.getMonth() - startDate.getMonth());
-      totalMonths += months;
-    });
-    return totalMonths;
-  };
-
-  const totalExperience = Math.max(5, Math.round(calculateTotalMonths() / 12));
-
-  const metrics = [
-    {
-      value: `${totalExperience}+`,
-      label: "Years Experience",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="sm:w-6 sm:h-6"
-        >
-          <rect width="18" height="18" x="3" y="3" rx="2" />
-          <path d="M8 12h8" />
-          <path d="M12 16V8" />
-        </svg>
-      ),
-    },
-    {
-      value: "15+",
-      label: "Projects Completed",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="sm:w-6 sm:h-6"
-        >
-          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-        </svg>
-      ),
-    },
-    {
-      value: "96%",
-      label: "Client Satisfaction",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="sm:w-6 sm:h-6"
-        >
-          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-        </svg>
-      ),
-    },
-  ];
+const MetricsOverviewOptimized = () => {
+  const { metrics } = useExperienceContent();
 
   return (
     <motion.div
@@ -192,7 +107,7 @@ const MetricsOverviewOptimized = ({
               {metric.icon}
             </div>
           </div>
-          <div className=" flex justify-center items-center flex-col pt-5">
+          <div className="flex justify-center items-center flex-col pt-5">
             <p className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-gemola text-earth-dark leading-none sm:leading-normal">
               {metric.value}
             </p>
@@ -427,8 +342,13 @@ const AchievementGrid = ({ achievements }: { achievements: any[] }) => {
   );
 };
 
+// Update the SkillExposure component to use content from experienceContent
+
 // Technical skill exposure - specifically designed for recruiters
 const SkillExposure = ({ experience }: { experience: ExperienceType[] }) => {
+  // Get technical proficiency and summary from content file
+  const { technicalProficiency, technicalSummary } = useExperienceContent();
+
   // Extract and count all unique technologies
   const techCount: { [key: string]: number } = {};
 
@@ -451,7 +371,7 @@ const SkillExposure = ({ experience }: { experience: ExperienceType[] }) => {
       transition={{ duration: 0.5 }}
     >
       <h3 className="text-2xl sm:text-3xl font-gemola text-earth-dark text-center mb-6 sm:mb-10">
-        Technical Proficiency
+        {technicalProficiency?.title || "Technical Proficiency"}
       </h3>
 
       <div className="max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto bg-earth-light/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-earth-sand/10">
@@ -515,14 +435,11 @@ const SkillExposure = ({ experience }: { experience: ExperienceType[] }) => {
             </div>
             <div className="text-center sm:text-left">
               <h4 className="text-base sm:text-lg font-gemola text-earth-dark mb-1.5 sm:mb-2">
-                Technical Summary
+                {technicalSummary?.title || "Technical Summary"}
               </h4>
               <p className="text-sm sm:text-base text-earth-brown/80 font-al">
-                Specialized in modern web development with {sortedTech[0]?.[0]}{" "}
-                and {sortedTech[1]?.[0]}, with additional expertise in mobile
-                application development. Consistently delivers high-quality,
-                scalable solutions with a focus on performance and user
-                experience.
+                {technicalSummary?.description ||
+                  `Specialized in modern web development with ${sortedTech[0]?.[0]} and ${sortedTech[1]?.[0]}, with additional expertise in mobile application development. Consistently delivers high-quality, scalable solutions with a focus on performance and user experience.`}
               </p>
             </div>
           </div>
@@ -531,8 +448,5 @@ const SkillExposure = ({ experience }: { experience: ExperienceType[] }) => {
     </motion.div>
   );
 };
-
-// Add the missing text-2xs class in your styles.css or as a utility
-// .text-2xs { font-size: 0.625rem; line-height: 0.75rem; }
 
 export default Experience;

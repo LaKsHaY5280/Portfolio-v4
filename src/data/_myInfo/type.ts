@@ -1,7 +1,7 @@
 export interface SocialLinks {
   github: string;
   linkedin: string;
-  twitter: string;
+  twitter?: string;
   instagram?: string;
 }
 

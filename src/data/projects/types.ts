@@ -6,7 +6,7 @@ export interface Project {
   technologies: string[];
   category: string;
   year: string;
-  githubUrl: string;
+  githubUrl?: string;
   liveUrl?: string;
   image: string;
   images?: string[];
@@ -19,7 +19,7 @@ export interface ProjectsContent {
     description: string;
   };
   buttons: {
-    github: string;
+    github?: string;
     live: string;
     viewAll: string;
     showLess: string;

@@ -260,7 +260,7 @@ const Header = () => {
           {/* Logo */}
           <div className="relative">
             <motion.a
-              href="#"
+              href="/"
               className="text-xl font-gemola text-earth-dark relative inline-block"
               whileHover={{ y: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
