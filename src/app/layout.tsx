@@ -22,7 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="!scroll-smooth">
-      <body className={`${inter.className} bg-earth-light text-earth-dark`}>
+      <body
+        className={`${inter.className} bg-earth-light text-earth-dark`}
+        suppressHydrationWarning
+      >
         <Frame>
           <Header />
           {children}

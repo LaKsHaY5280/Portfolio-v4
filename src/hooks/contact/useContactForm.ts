@@ -6,6 +6,11 @@ interface FormState {
   message: string;
 }
 
+interface FormResponse {
+  success: boolean;
+  message: string;
+}
+
 export const useContactForm = () => {
   const [formState, setFormState] = useState<FormState>({
     name: "",
@@ -14,18 +19,43 @@ export const useContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Add your form submission logic here
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    if (formRef.current) formRef.current.reset();
-    setFormState({ name: "", email: "", message: "" });
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 5000); // Hide after 5 seconds
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data: FormResponse = await response.json();
+
+      if (data.success) {
+        // Reset the form on success
+        if (formRef.current) formRef.current.reset();
+        setFormState({ name: "", email: "", message: "" });
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 5000); // Hide after 5 seconds
+      } else {
+        // Show error message
+        setErrorMessage(
+          data.message || "Something went wrong. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrorMessage("Failed to submit form. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange =
@@ -41,6 +71,7 @@ export const useContactForm = () => {
     formState,
     isSubmitting,
     showSuccess,
+    errorMessage,
     formRef,
     handleSubmit,
     handleChange,

@@ -24,7 +24,7 @@ export const layoutContent: LayoutContent = {
       { label: "Download Resume", href: myInfo.resumeUrl },
       {
         label: "View Source",
-        href: "https://github.com/LaKsHaY5280/portfolio",
+        href: "https://github.com/LaKsHaY5280/Portfolio-v4",
       },
     ],
   },

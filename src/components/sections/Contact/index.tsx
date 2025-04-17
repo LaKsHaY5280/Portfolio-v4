@@ -10,10 +10,10 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="container mx-auto max-w-6xl py-24 sm:py-32  px-4 sm:px-6 lg:px-8 relative"
+      className="mx-auto max-w-6xl py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden"
     >
       <motion.h2
-        className="text-4xl font-gemola text-earth-dark text-center mb-16"
+        className="text-3xl sm:text-4xl font-gemola text-earth-dark text-center mb-8 sm:mb-16"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -22,9 +22,9 @@ export const Contact = () => {
         {title}
       </motion.h2>
 
-      <div className="grid lg:grid-cols-2 gap-16 relative">
+      <div className="grid lg:grid-cols-2 gap-8 sm:gap-16 relative">
         {/* Background Gradient */}
-        <div className="absolute inset-0 blur-3xl -z-10">
+        <div className="absolute inset-0 blur-2xl sm:blur-3xl -z-10">
           <motion.div
             className="absolute inset-0 bg-gradient-to-br from-earth-sand/20 to-earth-sand/5 rounded-3xl"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -35,12 +35,12 @@ export const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="lg:order-2">
+        <div className="lg:order-2 w-full">
           <ContactForm />
         </div>
 
         {/* Contact Info */}
-        <div className="lg:order-1">
+        <div className="lg:order-1 w-full">
           <ContactInfo />
         </div>
       </div>

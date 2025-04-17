@@ -9,6 +9,7 @@ export const ContactForm = () => {
     formState,
     isSubmitting,
     showSuccess,
+    errorMessage,
     formRef,
     handleSubmit,
     handleChange,
@@ -24,7 +25,7 @@ export const ContactForm = () => {
       <motion.form
         ref={formRef}
         onSubmit={handleSubmit}
-        className="space-y-6"
+        className="space-y-4 sm:space-y-6 w-full max-w-full"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -35,7 +36,7 @@ export const ContactForm = () => {
             type="text"
             name="name"
             required
-            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-6 py-4 outline-none
+            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-4 sm:px-6 py-3 sm:py-4 outline-none
                      focus:border-earth-sand/20 transition-colors duration-300 font-al
                      text-earth-dark/90 placeholder:text-earth-dark/40
                      focus:bg-earth-dark/[0.075]"
@@ -57,7 +58,7 @@ export const ContactForm = () => {
             type="email"
             name="email"
             required
-            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-6 py-4 outline-none
+            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-4 sm:px-6 py-3 sm:py-4 outline-none
                      focus:border-earth-sand/20 transition-colors duration-300 font-al
                      text-earth-dark/90 placeholder:text-earth-dark/40
                      focus:bg-earth-dark/[0.075]"
@@ -79,7 +80,7 @@ export const ContactForm = () => {
             name="message"
             required
             rows={5}
-            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-6 py-4 outline-none
+            className="w-full bg-earth-dark/5 border border-earth-dark/10 rounded-xl px-4 sm:px-6 py-3 sm:py-4 outline-none
                      focus:border-earth-sand/20 transition-colors duration-300 font-al resize-none
                      text-earth-dark/90 placeholder:text-earth-dark/40
                      focus:bg-earth-dark/[0.075]"
@@ -96,9 +97,23 @@ export const ContactForm = () => {
           />
         </div>
 
+        {/* Error message display */}
+        <AnimatePresence>
+          {errorMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="text-red-500 bg-red-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-red-100 text-sm font-al"
+            >
+              {errorMessage}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <motion.button
           type="submit"
-          className="relative w-full bg-earth-dark text-earth-light rounded-xl px-6 py-4 font-al
+          className="relative w-full bg-earth-dark text-earth-light rounded-xl px-4 sm:px-6 py-3 sm:py-4 font-al
                    overflow-hidden group"
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.98 }}

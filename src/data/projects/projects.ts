@@ -18,27 +18,43 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Lens Echo",
+    title: "Sardarji Masale",
     description:
-      "Developed a secure social media platform with Next.js and Appwrite, focusing on user engagement and content interaction.",
+      "Architected and launched an eCommerce platform for Sardarji Masale products, enhancing online purchases and brand visibility.",
     longDescription:
-      "Features include image publishing, user verification, and engagement metrics (likes, followers). Enhanced user retention by 40% and integrated post-saving and sharing features to boost interaction.",
+      "Developed using Next.js and Shopify, the platform led to a 62% increase in sales across India. Implemented advanced SEO strategies, including keyword optimization and backlinking, resulting in over 500 daily impressions and a significant increase in site traffic.",
     technologies: [
       "Next.js",
-      "Appwrite",
-      "React Query",
+      "Shopify",
+      "RazorPay",
+      "ShipRocket",
       "TailwindCSS",
-      "Shadcn",
+      "Framer Motion",
+      "Vercel",
+      "AWS",
     ],
-    category: "Social Media",
-    year: "2023",
-    githubUrl: "https://github.com/LaKsHaY5280/Lens-Echo", // Replace with actual URL
-    liveUrl: "https://lensecholg.vercel.app",
-    image: "/images/projects/lensecho.png", // Replace with actual image path
+    category: "E-Commerce",
+    year: "2024",
+    liveUrl: "https://sardarjimasale.com",
+    image: "/images/projects/sardarjimasale.png", // Make sure to add this image
     featured: true,
   },
   {
     id: 3,
+    title: "IITM Alumni Platform",
+    description:
+      "Developed a Next.js-based alumni portal with a modern UI, enhancing community engagement among graduates.",
+    longDescription:
+      "Built with Next.js and integrated with Google Sheets API for real-time data management and automated updates. Implemented a secure login/registration system to foster community engagement and networking opportunities among alumni.",
+    technologies: ["Next.js", "Google Sheets API", "TailwindCSS", "Vercel"],
+    category: "Educational Platform",
+    year: "2025",
+    liveUrl: "https://alumniiitmjanakpuri.com",
+    image: "/images/projects/iitmalumni.png", // Make sure to add this image
+    featured: true,
+  },
+  {
+    id: 4,
     title: "Byte & Kilo",
     description:
       "A digital agency platform providing web development, SEO optimization, and tailored client solutions.",
@@ -59,19 +75,25 @@ export const projects: Project[] = [
     image: "/images/projects/bytekilo.png", // Replace with actual image path
     featured: true,
   },
-  // {
-  //   id: 4,
-  //   title: "Hello Study Global",
-  //   description:
-  //     "Developed a platform for students to curate university preferences, enhancing the client onboarding process.",
-  //   longDescription:
-  //     "Engineered using Next.js and Python, the platform achieved a 96.73% user satisfaction rate. Implemented A/B testing and UI/UX improvements, resulting in a 250% increase in successful client deals.",
-  //   technologies: ["Next.js", "Python", "UI/UX", "A/B Testing"],
-  //   category: "Education",
-  //   year: "2023",
-  //   // githubUrl: "https://github.com/LaKsHaY5280/hellostudy", // Replace with actual URL
-  //   // liveUrl: "https://hellostudyglobal.vercel.app", // Replace with actual URL if available
-  //   // image: "/images/projects/hellostudy.jpg", // Replace with actual image path
-  //   featured: false,
-  // },
+  {
+    id: 5,
+    title: "Lens Echo",
+    description:
+      "Developed a secure social media platform with Next.js and Appwrite, focusing on user engagement and content interaction.",
+    longDescription:
+      "Features include image publishing, user verification, and engagement metrics (likes, followers). Enhanced user retention by 40% and integrated post-saving and sharing features to boost interaction.",
+    technologies: [
+      "Next.js",
+      "Appwrite",
+      "React Query",
+      "TailwindCSS",
+      "Shadcn",
+    ],
+    category: "Social Media",
+    year: "2023",
+    githubUrl: "https://github.com/LaKsHaY5280/Lens-Echo", // Replace with actual URL
+    liveUrl: "https://lensecholg.vercel.app",
+    image: "/images/projects/lensecho.png", // Replace with actual image path
+    featured: true,
+  },
 ];

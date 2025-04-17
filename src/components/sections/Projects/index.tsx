@@ -9,9 +9,8 @@ const Projects = () => {
   const { header, buttons } = useProjectsContent();
   const [showAll, setShowAll] = useState(false);
 
-  const displayedProjects = showAll
-    ? projects
-    : projects.filter((project) => project.featured);
+  const displayedProjects = showAll ? projects : projects.slice(0, 3);
+
 
   return (
     <section

@@ -215,6 +215,11 @@ body {
   z-index: 1;
 }
 
+/* Add overflow-hidden utility for mobile menu */
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
 @media (max-width: 768px) {
   .timeline-grid {
     grid-template-columns: 1fr !important;
