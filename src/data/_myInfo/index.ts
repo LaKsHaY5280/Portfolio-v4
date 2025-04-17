@@ -10,7 +10,7 @@ export const myInfo: MyInfo = {
   initials: "LG",
   socialLinks: {
     github: "https://github.com/LaKsHaY5280",
-    linkedin: "https://linkedin.com/in/lakshay-goyal-lg",
+    linkedin: "https://linkedin.com/in/lakshaygoyal-lg",
     instagram: "https://www.instagram.com/akuma._.lakshay/",
   },
   buttons: {
