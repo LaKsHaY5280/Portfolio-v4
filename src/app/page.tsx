@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -10,7 +10,8 @@ import Contact from "@/components/sections/Contact";
 import SectionDivider from "@/components/ui/SectionDivider";
 import PageTransition from "@/components/ui/PageTransition";
 
-export default function Home() {
+// Client component that uses the search params
+function ScrollToSection() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -33,8 +34,17 @@ export default function Home() {
     }
   }, [searchParams]);
 
+  return null;
+}
+
+export default function Home() {
   return (
     <PageTransition>
+      {/* Wrap the component using useSearchParams in Suspense */}
+      <Suspense fallback={null}>
+        <ScrollToSection />
+      </Suspense>
+      
       <Hero />
       <SectionDivider />
       <About />
