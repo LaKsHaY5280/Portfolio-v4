@@ -69,42 +69,219 @@ const Skills = () => {
     .flatMap((category) => category.items)
     .sort((a, b) => b.proficiency - a.proficiency)
     .slice(0, 6);
+  // For peer developers: Skills grouped by mastery level with enhanced algorithm
+  const calculateMasteryScore = (skill: any, categoryName: string) => {
+    // Get all skills in this category to determine relative ranking
+    const categorySkills =
+      skills.find((cat) => cat.category === categoryName)?.items || [];
+    const categoryRank =
+      categorySkills
+        .sort((a, b) => b.proficiency - a.proficiency)
+        .findIndex((s) => s.name === skill.name) + 1;
 
-  // For peer developers: Skills grouped by mastery level
-  const masteryLevels = {
-    expert: skills.flatMap((category) =>
-      category.items.filter(
-        (skill) => skill.proficiency >= masteryLevelConfig[0].threshold
-      )
-    ),
-    advanced: skills.flatMap((category) =>
-      category.items.filter(
-        (skill) =>
-          skill.proficiency >= masteryLevelConfig[1].threshold &&
-          skill.proficiency < masteryLevelConfig[0].threshold
-      )
-    ),
-    competent: skills.flatMap((category) =>
-      category.items.filter(
-        (skill) => skill.proficiency < masteryLevelConfig[1].threshold
-      )
-    ),
+    // Calculate relative rank score (higher for better position in category)
+    const rankScore = categorySkills.length
+      ? (1 - categoryRank / categorySkills.length) * 20
+      : 0;
+
+    // Factor in category importance from priority config (lower number = higher priority)
+    const categoryPriorityValue = categoryPriority[categoryName] || 99;
+    const categoryImportance = 10 - Math.min(categoryPriorityValue, 9); // Scale to 1-10 score
+
+    // Check if skill is in timeline data to estimate experience duration
+    const timelineEntries = timelineConfig.data || [];
+    const firstMentionYear =
+      timelineEntries.find((entry) => entry.skills.includes(skill.name))
+        ?.year || null;
+
+    // Calculate experience score based on first mention (more points for older skills)
+    const currentYear = new Date().getFullYear();
+    const experienceScore = firstMentionYear
+      ? Math.min((currentYear - firstMentionYear) * 2, 15)
+      : 0;
+
+    // Calculate the component scores for better transparency
+    const proficiencyScore = skill.proficiency * 0.65;
+    const rankFactor = rankScore * 0.15;
+    const importanceFactor = categoryImportance * 0.1;
+    const experienceFactor = experienceScore * 0.1;
+
+    // Calculate the final weighted score
+    return {
+      ...skill,
+      category: categoryName,
+      masteryScore:
+        proficiencyScore + rankFactor + importanceFactor + experienceFactor,
+      // Add additional metadata for visualization and tooltips
+      masteryFactors: {
+        proficiencyScore,
+        rankFactor,
+        importanceFactor,
+        experienceFactor,
+        categoryRank,
+        firstUsedYear: firstMentionYear,
+        experienceYears: firstMentionYear ? currentYear - firstMentionYear : 0,
+      },
+    };
   };
 
-  // Ensure competent has at least some skills (fallback if all skills are high proficiency)
+  // Process all skills with the enhanced algorithm
+  const processedSkills = skills
+    .flatMap((category) =>
+      category.items.map((skill) =>
+        calculateMasteryScore(skill, category.category)
+      )
+    )
+    .sort((a, b) => b.masteryScore - a.masteryScore);
+  // Determine adaptive thresholds based on distribution, ensuring we have expert skills
+  const totalSkillCount = processedSkills.length;
+  // Use a more generous approach to ensure top skills make it into expert category
+  // Get the score of a skill in approximately the top 15% (reduced from 20%)
+  const topSkillIndex = Math.min(3, Math.floor(totalSkillCount * 0.15));
+  // Ensure we get a reasonable threshold even with small datasets
+  const topSkillScore = processedSkills[topSkillIndex]?.masteryScore || 80;
+
+  const expertThreshold = Math.min(
+    masteryLevelConfig[0].threshold * 0.85, // More reduction from base config (was 0.9)
+    topSkillScore - 1 // Slightly lower than top skill score to ensure inclusion
+  );
+  // Advanced threshold is positioned to create a good distribution between expert and competent
+  const advancedThreshold = Math.min(
+    masteryLevelConfig[1].threshold, // Use the original threshold
+    processedSkills[Math.floor(totalSkillCount * 0.4)]?.masteryScore || 70 // Top 40% (was 50%)
+  );
+  // Ensure balanced distribution across categories with improved algorithm
+  const getBalancedSkills = (
+    skills: any[],
+    maxPerCategory = 3,
+    ensureMinResults = 3
+  ) => {
+    const categories = {} as Record<string, any[]>;
+    const result = [];
+
+    // Sort input skills by masteryScore to ensure highest skills are prioritized
+    const sortedSkills = [...skills].sort(
+      (a, b) => b.masteryScore - a.masteryScore
+    );
+
+    // First pass: distribute top skills from each category
+    for (const skill of sortedSkills) {
+      const category = skill.category;
+      if (!categories[category]) categories[category] = [];
+
+      if (categories[category].length < maxPerCategory) {
+        categories[category].push(skill);
+        result.push(skill);
+      }
+    }
+
+    // Second pass: add remaining highest-scoring skills regardless of category
+    // but maintain the sorted order for best skills first
+    for (const skill of sortedSkills) {
+      if (!result.includes(skill)) {
+        result.push(skill);
+      }
+
+      // Ensure we have a good number of skills but not too many
+      // Adjusted to be slightly more permissive while keeping result set reasonable
+      const targetMaxSize = Math.max(
+        ensureMinResults,
+        Math.min(skills.length, Math.ceil(totalSkillCount * 0.35)) // Increased from 0.3
+      );
+
+      if (result.length >= targetMaxSize) break;
+    }
+
+    // Ensure we have at least some results if available
+    if (result.length === 0 && skills.length > 0) {
+      return sortedSkills.slice(0, Math.min(ensureMinResults, skills.length));
+    }
+
+    return result;
+  };
+  // Create the mastery levels with balanced distribution
+  // Ensure we have at least some expert skills by forcing the top skills into expert level
+  const forcedExpertSkills =
+    processedSkills.length > 0
+      ? processedSkills.slice(0, Math.max(2, Math.ceil(totalSkillCount * 0.1)))
+      : [];
+
+  const masteryLevels = {
+    expert: getBalancedSkills(
+      // Force the top N skills to be expert AND include skills that meet the threshold
+      [
+        ...forcedExpertSkills,
+        ...processedSkills.filter(
+          (skill) =>
+            skill.masteryScore >= expertThreshold &&
+            !forcedExpertSkills.includes(skill)
+        ),
+      ],
+      4, // Increased from 3 to show more expert skills
+      3 // Minimum of 3 expert skills if available
+    ),
+    advanced: getBalancedSkills(
+      processedSkills.filter(
+        (skill) =>
+          skill.masteryScore >= advancedThreshold &&
+          skill.masteryScore < expertThreshold &&
+          !forcedExpertSkills.includes(skill) // Exclude forced expert skills
+      ),
+      4 // Increased from 3
+    ),
+    competent: getBalancedSkills(
+      processedSkills.filter(
+        (skill) =>
+          skill.masteryScore < advancedThreshold &&
+          !forcedExpertSkills.includes(skill) // Exclude forced expert skills
+      ),
+      4 // Increased from 3
+    ),
+  };
+  // Ensure each level has at least some skills for a balanced presentation
+  // First check expert level
+  if (masteryLevels.expert.length === 0 && processedSkills.length > 0) {
+    // Force the top 2-3 skills to be expert level if needed
+    masteryLevels.expert = processedSkills.slice(
+      0,
+      Math.min(3, processedSkills.length)
+    );
+  }
+
+  // Then check advanced level
+  if (masteryLevels.advanced.length === 0 && processedSkills.length > 3) {
+    // Take middle skills for advanced if available
+    const middleStart = Math.min(masteryLevels.expert.length, 3);
+    const middleCount = Math.min(3, processedSkills.length - middleStart);
+    masteryLevels.advanced = processedSkills.slice(
+      middleStart,
+      middleStart + middleCount
+    );
+  }
+
+  // Finally, check competent level
   if (masteryLevels.competent.length === 0) {
-    // Take some skills from advanced if competent is empty
-    if (masteryLevels.advanced.length > 3) {
-      // Move a few skills from advanced to competent for better distribution
-      const skillsToMove = masteryLevels.advanced.slice(-5);
+    // Take lowest skills from advanced if available or use lowest skills
+    if (masteryLevels.advanced.length > 4) {
+      const skillsToMove = masteryLevels.advanced.slice(-3);
       masteryLevels.competent = skillsToMove;
-      masteryLevels.advanced = masteryLevels.advanced.slice(0, -5);
-    } else {
-      // Fallback to lowest proficiency skills from the expert category
-      const allSkills = skills
-        .flatMap((category) => category.items)
-        .sort((a, b) => a.proficiency - b.proficiency);
-      masteryLevels.competent = allSkills.slice(0, 3);
+      masteryLevels.advanced = masteryLevels.advanced.slice(0, -3);
+    } else if (
+      processedSkills.length >
+      masteryLevels.expert.length + masteryLevels.advanced.length
+    ) {
+      // Fallback to lowest proficiency skills
+      const allSkills = [...processedSkills].sort(
+        (a, b) => a.masteryScore - b.masteryScore
+      );
+      // Take skills not already in expert/advanced
+      const alreadyUsed = [
+        ...masteryLevels.expert,
+        ...masteryLevels.advanced,
+      ].map((s) => s.name);
+      masteryLevels.competent = allSkills
+        .filter((skill) => !alreadyUsed.includes(skill.name))
+        .slice(0, 3);
     }
   }
 
@@ -522,7 +699,6 @@ const MasteryView = ({
       </div>
     );
   }
-
   return (
     <div className="space-y-12">
       {/* Expert Skills with special visuals */}
@@ -572,7 +748,7 @@ const MasteryView = ({
   );
 };
 
-// Mastery category component
+// Mastery category component with enhanced information display
 const MasteryCategory = ({
   title,
   skills,
@@ -581,37 +757,85 @@ const MasteryCategory = ({
   title: string;
   skills: any[];
   color: string;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="bg-earth-light/30 backdrop-blur-sm rounded-xl p-6 border border-earth-dark/5"
-    style={{ borderLeft: `4px solid ${color}` }}
-  >
-    <h4 className="text-lg sm:text-xl font-gemola text-earth-dark mb-4 flex items-center gap-2">
-      <span
-        className="w-3 h-3 rounded-full"
-        style={{ backgroundColor: color }}
-      ></span>
-      {title}
-      <span className="text-earth-brown/60 text-sm font-al ml-auto">
-        {skills.length}
-      </span>
-    </h4>
-    <div className="flex flex-wrap gap-2">
-      {skills.map((skill) => (
+}) => {
+  // Group skills by category for better organization
+  const skillsByCategory: Record<string, any[]> = {};
+  skills.forEach((skill) => {
+    const category = skill.category || "Other";
+    if (!skillsByCategory[category]) {
+      skillsByCategory[category] = [];
+    }
+    skillsByCategory[category].push(skill);
+  });
+
+  // Sort categories by priority
+  const sortedCategories = Object.keys(skillsByCategory).sort();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="bg-earth-light/30 backdrop-blur-sm rounded-xl p-6 border border-earth-dark/5"
+      style={{ borderLeft: `4px solid ${color}` }}
+    >
+      <h4 className="text-lg sm:text-xl font-gemola text-earth-dark mb-4 flex items-center gap-2">
         <span
-          key={skill.name}
-          className="bg-earth-dark/5 px-2 py-1 rounded text-sm text-earth-brown font-al"
-        >
-          {skill.name}
+          className="w-3 h-3 rounded-full"
+          style={{ backgroundColor: color }}
+        ></span>
+        {title}
+        <span className="text-earth-brown/60 text-sm font-al ml-auto">
+          {skills.length}
         </span>
-      ))}
-    </div>
-  </motion.div>
-);
+      </h4>
+      {/* Group skills by category for better organization */}
+      {sortedCategories.map((category) => (
+        <div key={category} className="mb-4 last:mb-0">
+          <p className="text-xs text-earth-brown/50 mb-2 uppercase tracking-wider">
+            {category.replace(" Development", "")}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {skillsByCategory[category].map((skill) => {
+              // Calculate opacity based on masteryScore to create visual hierarchy
+              const opacity = skill.masteryScore
+                ? Math.min(0.9, Math.max(0.5, skill.masteryScore / 100))
+                : 0.7;
+
+              return (
+                <motion.span
+                  key={skill.name}
+                  className="bg-earth-dark/5 px-2 py-1 rounded text-sm text-earth-brown font-al flex items-center gap-1 group relative"
+                  style={{
+                    backgroundColor: `rgba(34, 48, 48, ${opacity * 0.1})`,
+                  }}
+                  whileHover={{ y: -2 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  {skill.name}
+                  <div className="flex items-center gap-1">
+                    {skill.masteryScore && (
+                      <span className="text-2xs bg-earth-sand/20 px-1.5 py-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity">
+                        {Math.round(skill.proficiency)}%
+                      </span>
+                    )}{" "}
+                    {/* {skill.masteryFactors?.experienceYears &&
+                      skill.masteryFactors.experienceYears > 0 && (
+                        <span className="text-2xs bg-earth-light/50 px-1 py-0.5 rounded-full hidden group-hover:inline-block">
+                          {skill.masteryFactors.experienceYears}yr
+                        </span>
+                      )} */}
+                  </div>
+                </motion.span>
+              );
+            })}
+          </div>
+        </div>
+      ))}{" "}
+    </motion.div>
+  );
+};
 
 // Timeline view - For clients who want to understand growth journey
 const TimelineView = ({
@@ -731,7 +955,7 @@ const TimelineView = ({
                   {period.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="bg-earth-sand/10 px-2 py-1 rounded text-sm text-earth-brown"
+                      className="bg-earth-sand/10 font-al px-2 py-1 rounded text-sm text-earth-brown"
                     >
                       {skill}
                     </span>
