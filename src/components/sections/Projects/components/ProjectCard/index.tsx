@@ -72,7 +72,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
           {/* Description */}
           <motion.p
-            className="text-earth-brown/80 font-al mb-6 line-clamp-3 group-hover:line-clamp-none 
+            className="text-earth-brown/80 font-al mb-6 line-clamp-3 
                      transition-all duration-300 leading-relaxed"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
                   style={{
                     opacity: isHovered ? 0.3 : 0.9,
                     background:
-                      "linear-gradient(135deg, rgba(187, 165, 143, 0.98) 0%, rgba(255, 249, 240, 0.95) 50%, rgba(34, 48, 48, 0.98) 100%)",
+                      "linear-gradient(135deg, rgba(187, 165, 143, 0.98) 0%, rgba(255, 249, 240, 0.25) 50%, rgba(34, 48, 48, 0.98) 100%)",
                     mixBlendMode: "overlay",
                   }}
                 />

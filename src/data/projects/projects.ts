@@ -18,25 +18,25 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Sardarji Masale",
+    title: "IELTS 7+ House",
     description:
-      "Architected and launched an eCommerce platform for Sardarji Masale products, enhancing online purchases and brand visibility.",
+      "Architected and launched an IELTS preparation platform where students practiced Cambridge mock tests online, resulting in 60K+ total attempts across Academic and General Reading modules.",
     longDescription:
-      "Developed using Next.js and Shopify, the platform led to a 62% increase in sales across India. Implemented advanced SEO strategies, including keyword optimization and backlinking, resulting in over 500 daily impressions and a significant increase in site traffic.",
+      "Developed using Next.js and Shopify, the platform enabled secure payments via RazorPay, allowing students to seamlessly purchase personalized IELTS writing essay reviews and feedback sessions from expert evaluators. Achieved 60K+ total mock test attempts across Academic and General Reading modules.",
     technologies: [
       "Next.js",
       "Shopify",
       "RazorPay",
-      "ShipRocket",
+      "Google Analytics",
       "TailwindCSS",
       "Framer Motion",
       "Vercel",
       "AWS",
     ],
-    category: "E-Commerce",
+    category: "Educational Platform",
     year: "2024",
-    liveUrl: "https://sardarjimasale.com",
-    image: "/images/projects/sardarjimasale.png", // Make sure to add this image
+    liveUrl: "https://ielts7plushouse.com",
+    image: "/images/projects/ielts7plushouese.png", // Make sure to add this image
     featured: true,
   },
   {
