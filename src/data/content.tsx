@@ -330,7 +330,7 @@ export const projects: Project[] = [
     category: "EdTech",
     year: "2025",
     liveUrl: "https://ielts7plushouse.com",
-    image: "/images/projects/ielts7plus-house.png",
+    image: "/images/projects/ielts7plushouse.png",
     featured: true,
   },
   {

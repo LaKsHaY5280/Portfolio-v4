@@ -161,7 +161,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
       {/* Project Image with Refined Frosted Glass Elements */}
       <div
-        className={`relative aspect-[16/10] rounded-2xl shadow-md group-hover:shadow-xl z-10
+        className={`relative aspect-[16/8] rounded-2xl shadow-md group-hover:shadow-xl z-10
                   transition-all duration-500 ${!isEven ? "md:order-1" : ""}`}
         style={{ zIndex: 5 }} // Ensure this stays below navbar but above other content
       >
