@@ -13,11 +13,8 @@ export const ExpertiseCard = ({
   items,
   index,
 }: ExpertiseCardProps) => {
-  // Sort skills by proficiency for visual hierarchy
-  const sortedItems = [...items].sort((a, b) => b.proficiency - a.proficiency);
-
-  // Only show top 3 skills to reduce card size
-  const topSkills = sortedItems.slice(0, 3);
+  // Data is intentionally unranked — show all skills as a clean tag list
+  const skillNames = items.map((item) => item.name);
 
   return (
     <motion.div
@@ -40,34 +37,15 @@ export const ExpertiseCard = ({
         {category}
       </h3>
 
-      {/* Minimal skills list */}
-      <div className="space-y-4">
-        {topSkills.map((item) => (
-          <div key={item.name} className="group">
-            <div className="flex justify-between items-center mb-1.5">
-              <span className="text-responsive-sm font-al text-earth-dark font-medium">
-                {item.name}
-              </span>
-              <span className="text-responsive-xs font-al text-earth-brown/70">
-                {item.proficiency >= 85
-                  ? "Expert"
-                  : item.proficiency >= 75
-                  ? "Advanced"
-                  : "Proficient"}
-              </span>
-            </div>
-
-            {/* Thinner progress bar */}
-            <div className="h-1 w-full bg-earth-light/40 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-earth-sand/70 rounded-full"
-                initial={{ width: 0 }}
-                whileInView={{ width: `${item.proficiency}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
-              />
-            </div>
-          </div>
+      {/* Unranked skills list */}
+      <div className="flex flex-wrap gap-2">
+        {skillNames.map((name) => (
+          <span
+            key={name}
+            className="text-responsive-sm font-al text-earth-dark bg-earth-light/40 border border-earth-dark/5 rounded-lg px-3 py-1.5"
+          >
+            {name}
+          </span>
         ))}
       </div>
 

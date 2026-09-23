@@ -52,17 +52,21 @@ const SkillCard = ({ skill, index }: SkillCardProps) => {
           >
             {skill.name}
           </motion.span>
-          <motion.span
-            className="text-sm text-earth-dark/60 group-hover:text-earth-dark/80 transition-colors font-al"
-            animate={{ scale: isHovered ? 1.1 : 1 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-          >
-            {skill.proficiency}%
-          </motion.span>
+          {skill.proficiency !== undefined && (
+            <motion.span
+              className="text-sm text-earth-dark/60 group-hover:text-earth-dark/80 transition-colors font-al"
+              animate={{ scale: isHovered ? 1.1 : 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            >
+              {skill.proficiency}%
+            </motion.span>
+          )}
         </div>
 
         {/* Progress Bar */}
-        <SkillLevel level={skill.proficiency} isHovered={isHovered} />
+        {skill.proficiency !== undefined && (
+          <SkillLevel level={skill.proficiency} isHovered={isHovered} />
+        )}
       </motion.div>
     </motion.div>
   );

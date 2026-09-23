@@ -1,7 +1,6 @@
 /**
  * Master content file for all portfolio data.
- * All site content lives here; the per-section files in
- * src/data/<section>/ re-export from this file for compatibility.
+ * Updated to match Lakshay Goyal's current resume and professional positioning.
  */
 import React from "react";
 
@@ -21,15 +20,16 @@ import {
 } from "./types";
 
 // ============================================
-// My Info (personal data)
+// My Info
 // ============================================
 
 export const myInfo: MyInfo = {
   name: "Lakshay Goyal",
-  role: "Web/App Developer",
-  location: "India",
+  role: "Software Engineer | Full-Stack Developer",
+  location: "New Delhi, India | Open to Relocate",
   email: "lakshaygoyal.connect@gmail.com",
-  bio: "Expertise in frameworks like Next.js focused on creating scalable, user-centric applications. Proven track record of enhancing performance, boosting user engagement, and delivering impactful solutions in e-commerce, and digital services.",
+  bio:
+    "Full-stack software engineer with production experience across Shopify, Angular, NestJS, Next.js, databases, third-party integrations, and product development.",
   resumeUrl: "/resume",
   initials: "LG",
   socialLinks: {
@@ -38,13 +38,13 @@ export const myInfo: MyInfo = {
     instagram: "https://www.instagram.com/akuma._.lakshay/",
   },
   buttons: {
-    contact: "Get in Touch",
-    projects: "View My Work",
+    contact: "Let's Connect",
+    projects: "Explore My Work",
   },
 };
 
 // ============================================
-// Layout (navigation, footer, buttons)
+// Layout
 // ============================================
 
 export const layoutContent: LayoutContent = {
@@ -56,11 +56,9 @@ export const layoutContent: LayoutContent = {
     { label: "Contact", href: "#contact" },
   ],
   footer: {
-    tagline: "Let's work together!",
+    tagline: "Build things that matter.",
     sections: ["Quick Links", "Connect"],
-    copyright: `© ${new Date().getFullYear()} ${
-      myInfo.name
-    }. All rights reserved.`,
+    copyright: `© ${new Date().getFullYear()} ${myInfo.name}. All rights reserved.`,
     links: [
       { label: "GitHub", href: myInfo.socialLinks.github },
       { label: "LinkedIn", href: myInfo.socialLinks.linkedin },
@@ -86,43 +84,45 @@ export const layoutContent: LayoutContent = {
 
 export const aboutContent: AboutContent = {
   introduction: {
-    title: `I'm Lakshay. A web developer, problem-solver, and technology enthusiast.`,
+    title: "I'm Lakshay. A software engineer who likes building things end to end.",
     bio: [
-      "I specialize in designing and developing scalable web solutions that prioritize performance and user engagement. My technical expertise includes frameworks and tools like Next.js, React.js, and TailwindCSS, enabling me to deliver solutions that are efficient, secure, and visually appealing.",
-      "Through diverse projects in education, e-commerce, and digital services, I've created platforms that drive measurable results, such as increasing user satisfaction by 96.73% and boosting e-commerce sales by 92%. Based in India, I am passionate about leveraging modern technologies to craft impactful digital experiences and solve complex challenges effectively.",
+      "I'm a software engineer and MCA student at IIIT Vadodara, focused on building and shipping full-stack products. My work spans frontend, backend, databases, integrations, performance optimization, and production debugging.",
+      "I have worked directly with clients and designers, co-delivered a large WordPress-to-Shopify migration, built core Angular/NestJS modules for a live platform, and developed an IELTS practice platform from scratch. I like understanding the problem first, then designing and building the right solution.",
     ],
   },
   profile: {
     initials: myInfo.initials,
-    spinningText: "WEB/APP DEVELOPER • DESIGNER • TECH ENTHUSIAST • ",
+    spinningText:
+      "SOFTWARE ENGINEER • FULL-STACK DEVELOPER • PRODUCT BUILDER • ",
   },
   stats: [
     {
-      years: "4+",
-      area: "Years of Web Development",
-      details: "Specialized in React, Next.js, and full-stack solutions.",
+      years: "1+",
+      area: "Years in Production",
+      details:
+        "Hands-on experience shipping software across eCommerce and EdTech products.",
     },
     {
-      years: "3+",
-      area: "Years of Project Experience",
+      years: "20K+",
+      area: "Records Migrated",
       details:
-        "Including e-commerce platforms, social media applications, and agency websites.",
+        "Co-delivered a WordPress-to-Shopify migration covering blogs, orders, customers, and reviews.",
     },
     {
-      years: "5+",
-      area: "Years Working with Technologies",
+      years: "41 → 93",
+      area: "Mobile Lighthouse",
       details:
-        "Expertise in frameworks like Next.js, TailwindCSS, and tools like Figma and Git.",
+        "Improved EarthKind's mobile performance through asset and third-party script optimization.",
     },
   ],
   cta: {
-    title: "Let's Build Something Together",
+    title: "Let's Build Something Real",
     description:
-      "Open to discussing innovative projects, collaborating on challenges, or sharing insights. Let's connect and create impactful solutions.",
+      "Open to software engineering opportunities, technical collaborations, and interesting products worth building.",
     resumeUrl: myInfo.resumeUrl,
     buttons: {
       resume: "View My Resume",
-      connect: "Connect Now",
+      connect: "Get in Touch",
     },
   },
 };
@@ -134,15 +134,15 @@ export const aboutContent: AboutContent = {
 export const experienceContent: ExperienceContent = {
   header: {
     title: "Experience",
-    subtitle: "Professional Journey",
+    subtitle: "From Requirements to Production",
     description:
-      "A timeline of my professional journey, showcasing my growth, expertise, and contributions in the tech industry.",
+      "Production experience across eCommerce, EdTech, Shopify, Angular, NestJS, and full-stack product development.",
     label: "WORK EXPERIENCE",
   },
   metrics: [
     {
-      value: "5+",
-      label: "Years Experience",
+      value: "1+",
+      label: "Years Production Experience",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -163,8 +163,8 @@ export const experienceContent: ExperienceContent = {
       ),
     },
     {
-      value: "15+",
-      label: "Projects Completed",
+      value: "20K+",
+      label: "Records Migrated",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -178,13 +178,15 @@ export const experienceContent: ExperienceContent = {
           strokeLinejoin="round"
           className="sm:w-6 sm:h-6"
         >
-          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+          <path d="M3 6h18" />
+          <path d="M3 12h18" />
+          <path d="M3 18h18" />
         </svg>
       ),
     },
     {
-      value: "96%",
-      label: "Client Satisfaction",
+      value: "41 → 93",
+      label: "Mobile Lighthouse",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -198,32 +200,32 @@ export const experienceContent: ExperienceContent = {
           strokeLinejoin="round"
           className="sm:w-6 sm:h-6"
         >
-          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+          <path d="M3 12h4l3-8 4 16 3-8h4" />
         </svg>
       ),
     },
   ],
   technicalProficiency: {
-    title: "Technical Proficiency",
+    title: "Technical Toolkit",
   },
   technicalSummary: {
-    title: "Technical Summary",
+    title: "How I Work",
     description:
-      "Specialized in modern web development with React.js and Next.js, with additional expertise in mobile application development. Consistently delivers high-quality, scalable solutions with a focus on performance and user experience.",
+      "I work across the stack: understanding requirements, designing technical solutions, building frontend and backend systems, integrating external services, and debugging production issues.",
   },
   sections: {
     timeline: {
-      title: "Timeline",
+      title: "Career Timeline",
       description:
-        "A detailed look at my career milestones and roles over the years.",
-      hoverIndicator: "Click on each timeline item for more details.",
+        "A progression from web development foundations to production engineering and full-stack product work.",
+      hoverIndicator: "Click on each role for more details.",
     },
     achievements: {
-      title: "Key Achievements",
+      title: "Selected Highlights",
     },
     details: {
       techStack: "Technologies Used",
-      responsibilities: "Major Responsibilities",
+      responsibilities: "What I Worked On",
     },
   },
   timelineConfig: {
@@ -243,211 +245,120 @@ export const experienceContent: ExperienceContent = {
 
 export const experience: Experience[] = [
   {
-    company: "Astraum Digital Solutions",
-    role: "Full Stack Developer",
-    duration: "November 2024 – December 2024",
+    company: "Betatest Solutions Pvt Ltd",
+    role: "Software Engineer Intern",
+    duration: "October 2025 – July 2026",
     responsibilities: [
-      "Built a health tech platform using React.js, Node.js, and MongoDB, incorporating real-time tracking and payment integration, resulting in a 40% efficiency boost.",
-      "Launched an animated, SEO-optimized website with Next.js and GSAP, increasing traffic by 60% within three months.",
-      "Delivered projects 20% ahead of schedule by implementing Agile workflows, enhancing client satisfaction.",
+      "Worked directly with clients and designers to translate requirements into technical solutions and production-ready implementations.",
+      "Co-delivered a 2-month WordPress-to-Shopify migration for EarthKind; owned database content extraction and restructuring for 1,000+ blogs, 10,000+ orders, 5,000+ customers, and 5,000+ reviews, mapping legacy data to custom and native Shopify metafields.",
+      "Improved EarthKind's mobile Lighthouse performance from 41 to 93 through image and CSS optimization, lazy loading, dynamic resource loading, and third-party script optimization including GA4.",
+      "Developed three core YouTuneIn modules—admin dashboard, newsletter and email system with 40+ reusable templates, and client profile management—using Angular and NestJS; implemented role-based permissions, CRUD workflows, file uploads, and automated emails.",
+      "Diagnosed and resolved a production issue that prevented billing details from appearing in the YouTuneIn admin dashboard.",
     ],
     technologies: [
-      "React.js",
-      "Node.js",
-      "MongoDB",
-      "Next.js",
-      "GSAP",
-      "Agile",
+      "Shopify",
+      "Liquid",
+      "Angular",
+      "NestJS",
+      "JavaScript",
+      "GA4",
+      "REST APIs",
     ],
   },
   {
-    company: "Laung Laachi",
-    role: "Web Developer",
-    duration: "December 2023 – Present",
+    company: "IELTS 7+ House",
+    role: "Software Engineer (Freelance)",
+    duration: "June 2025 – September 2025",
     responsibilities: [
-      "Architected and launched an e-commerce platform using Next.js and Shopify, enabling seamless online purchases for Laung Laachi products.",
-      "Implemented advanced SEO strategies, resulting in over 1,000 daily impressions and a significant increase in site traffic.",
-      "Achieved a 92% increase in sales across India by improving user experience and backend efficiency.",
+      "Architected and built a full-stack IELTS practice platform from scratch using Next.js 14, Node.js/Express, Firebase, and Razorpay.",
+      "Translated business requirements into production-ready application architecture, data models, and student workflows.",
+      "Designed workflows for 30+ IELTS question types across Reading, Listening, and Writing, including split-layout answering and writing submissions.",
+      "Built the platform around real student practice workflows and supported 180+ active students.",
     ],
-    technologies: ["Next.js", "Shopify", "SEO", "Backend Development"],
-  },
-];
-
-export const achievements: Achievement[] = [
-  {
-    title: "Web Lead - Google Developer Student Club",
-    description:
-      "Served as the Web Lead at GDSC IINTM, leading development initiatives and fostering collaboration among team members.",
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Hackathon Runner-Up",
-    description:
-      "Achieved 1st runner-up position in the Hackathon Matrix TechFest organized by IINTM.",
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12l2 2 4-4m6 5h.01M6 19h12a2 2 0 002-2v-5a2 2 0 00-2-2H6a2 2 0 00-2 2v5a2 2 0 002 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "E-Commerce Success",
-    description:
-      "Architected and launched an e-commerce platform, increasing sales by 92% and achieving over 1,000 daily impressions.",
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
+    technologies: [
+      "Next.js 14",
+      "Node.js",
+      "Express.js",
+      "Firebase",
+      "Razorpay",
+      "REST APIs",
+    ],
   },
 ];
 
 // ============================================
-// Projects
+// Selected Projects / Work
 // ============================================
 
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Laung Laachi",
+    title: "EarthKind",
     description:
-      "Architected and launched an e-commerce platform, enabling seamless online purchases for Laung Laachi products.",
+      "Production eCommerce migration and performance optimization from WordPress to Shopify.",
     longDescription:
-      "Developed using Next.js and Shopify, the platform resulted in a 92% increase in sales across India. Integrated advanced SEO strategies such as keyword optimization and backlinking, achieving over 1,000 daily impressions and substantial traffic growth.",
-    technologies: ["Next.js", "Shopify", "TailwindCSS", "SEO"],
-    category: "E-Commerce",
-    year: "2023",
-    // githubUrl: "https://github.com/LaKsHaY5280/project", // Replace with actual URL
-    liveUrl: "https://launglaachi.co", // Replace with actual URL if available
-    image: "/images/projects/launglaachi.png", // Replace with actual image path
+      "Co-delivered a 2-month WordPress-to-Shopify migration covering 1,000+ blogs, 10,000+ orders, 5,000+ customers, and 5,000+ reviews. Owned database content extraction and restructuring, mapped legacy data to custom and native Shopify metafields, and improved mobile Lighthouse performance from 41 to 93 through image/CSS optimization, lazy loading, dynamic resource loading, and third-party script optimization including GA4.",
+    technologies: ["Shopify", "Liquid", "GA4", "Performance", "Data Migration"],
+    category: "eCommerce",
+    year: "2025–2026",
+    liveUrl: "https://www.earthkind.com/",
+    image: "/images/projects/earthkind.png",
     featured: true,
   },
   {
     id: 2,
-    title: "IELTS 7+ House",
+    title: "YouTuneIn",
     description:
-      "Architected and launched an IELTS preparation platform where students practiced Cambridge mock tests online, resulting in 60K+ total attempts across Academic and General Reading modules.",
+      "Core product modules for a live sound and meditation platform built with Angular and NestJS.",
     longDescription:
-      "Developed using Next.js and Shopify, the platform enabled secure payments via RazorPay, allowing students to seamlessly purchase personalized IELTS writing essay reviews and feedback sessions from expert evaluators. Achieved 60K+ total mock test attempts across Academic and General Reading modules.",
-    technologies: [
-      "Next.js",
-      "Shopify",
-      "RazorPay",
-      "Google Analytics",
-      "TailwindCSS",
-      "Framer Motion",
-      "Vercel",
-      "AWS",
-    ],
-    category: "Educational Platform",
-    year: "2024",
-    liveUrl: "https://ielts7plushouse.com",
-    image: "/images/projects/ielts7plushouese.png", // Make sure to add this image
+      "Developed and shipped an admin dashboard, newsletter and email system with 40+ reusable templates, and client profile management. Implemented role-based permissions, CRUD workflows, file uploads, automated emails, and production fixes for core platform workflows.",
+    technologies: ["Angular", "NestJS", "TypeScript", "REST APIs"],
+    category: "Product Platform",
+    year: "2025–2026",
+    liveUrl: "https://youtunein.com/",
+    image: "/images/projects/youtunein.png",
     featured: true,
   },
   {
     id: 3,
+    title: "IELTS 7+ House",
+    description:
+      "Full-stack IELTS practice platform built from scratch for online Reading, Listening, and Writing practice.",
+    longDescription:
+      "Architected and built a production-ready IELTS practice platform using Next.js 14, Node.js/Express, Firebase, and Razorpay. Designed the data model and workflows for 30+ IELTS question types, split-layout answering, and writing submissions; the platform has been used by 180+ active students.",
+    technologies: ["Next.js 14", "Node.js", "Express.js", "Firebase", "Razorpay"],
+    category: "EdTech",
+    year: "2025",
+    liveUrl: "https://ielts7plushouse.com",
+    image: "/images/projects/ielts7plus-house.png",
+    featured: true,
+  },
+  {
+    id: 4,
     title: "IITM Alumni Platform",
     description:
       "Developed a Next.js-based alumni portal with a modern UI, enhancing community engagement among graduates.",
     longDescription:
       "Built with Next.js and integrated with Google Sheets API for real-time data management and automated updates. Implemented a secure login/registration system to foster community engagement and networking opportunities among alumni.",
     technologies: ["Next.js", "Google Sheets API", "TailwindCSS", "Vercel"],
-    category: "Educational Platform",
+    category: "EdTech",
     year: "2025",
     liveUrl: "https://alumniiitmjanakpuri.com",
-    image: "/images/projects/iitmalumni.png", // Make sure to add this image
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "Byte & Kilo",
-    description:
-      "A digital agency platform providing web development, SEO optimization, and tailored client solutions.",
-    longDescription:
-      "Built with Next.js and Django, this platform secured 15+ clients in its first quarter, achieving 20% revenue growth and expanding the client base by 46%.",
-    technologies: [
-      "Next.js",
-      "Django",
-      "TailwindCSS",
-      "Framer Motion",
-      "AWS",
-      "Shadcn",
-    ],
-    category: "Agency Platform",
-    year: "2024",
-    githubUrl: "https://github.com/Byte-Brains-Ai/Byte-and-Kilo", // Replace with actual URL
-    liveUrl: "https://byte-and-kilo.vercel.app",
-    image: "/images/projects/bytekilo.png", // Replace with actual image path
-    featured: true,
-  },
-  {
-    id: 5,
-    title: "Lens Echo",
-    description:
-      "Developed a secure social media platform with Next.js and Appwrite, focusing on user engagement and content interaction.",
-    longDescription:
-      "Features include image publishing, user verification, and engagement metrics (likes, followers). Enhanced user retention by 40% and integrated post-saving and sharing features to boost interaction.",
-    technologies: [
-      "Next.js",
-      "Appwrite",
-      "React Query",
-      "TailwindCSS",
-      "Shadcn",
-    ],
-    category: "Social Media",
-    year: "2023",
-    githubUrl: "https://github.com/LaKsHaY5280/Lens-Echo", // Replace with actual URL
-    liveUrl: "https://lensecholg.vercel.app",
-    image: "/images/projects/lensecho.png", // Replace with actual image path
+    image: "/images/projects/iitmalumni.png",
     featured: true,
   },
 ];
 
 export const projectsContent: ProjectsContent = {
   header: {
-    title: "Featured Projects",
+    title: "Selected Work",
     description:
-      "A selection of my top projects, showcasing technical expertise and the ability to solve real-world problems with innovative solutions.",
+      "Production products and client work that demonstrate full-stack development, technical ownership, integrations, and problem solving.",
   },
   buttons: {
     github: "View Code",
-    live: "Live Demo",
-    viewAll: "View All Projects",
+    live: "Live Project",
+    viewAll: "View All Work",
     showLess: "Show Less",
   },
 };
@@ -460,69 +371,66 @@ export const skills: SkillCategory[] = [
   {
     category: "Frontend Development",
     items: [
-      { name: "React.js", proficiency: 90 },
-      { name: "Next.js", proficiency: 90 },
-      { name: "TypeScript", proficiency: 85 },
-      { name: "TailwindCSS", proficiency: 90 },
-      { name: "GSAP", proficiency: 85 },
-      { name: "Framer Motion", proficiency: 80 },
-      { name: "Shadcn", proficiency: 75 },
+      { name: "React.js" },
+      { name: "Next.js" },
+      { name: "Angular" },
+      { name: "React Native" },
+      { name: "Tailwind CSS" },
+      { name: "HTML" },
+      { name: "CSS" },
     ],
   },
   {
     category: "Backend Development",
     items: [
-      { name: "Node.js", proficiency: 85 },
-      { name: "Django", proficiency: 80 },
-      { name: "Express.js", proficiency: 80 },
-      { name: "MongoDB", proficiency: 75 },
-      { name: "PostgreSQL", proficiency: 70 },
-      { name: "SQL", proficiency: 70 },
-      { name: "NoSQL", proficiency: 70 },
+      { name: "Node.js" },
+      { name: "Express.js" },
+      { name: "NestJS" },
+      { name: "REST APIs" },
+      { name: "Prisma" },
     ],
   },
   {
-    category: "Mobile Development",
+    category: "Databases & Data",
     items: [
-      { name: "React Native", proficiency: 85 },
-      { name: "Flutter", proficiency: 75 },
-      { name: "Android Development", proficiency: 70 },
+      { name: "PostgreSQL" },
+      { name: "MongoDB" },
+      { name: "Redis" },
+      { name: "Firebase" },
+      { name: "Supabase" },
+      { name: "SQL" },
     ],
   },
   {
-    category: "DevOps & Tools",
+    category: "Cloud & DevOps",
     items: [
-      { name: "Git", proficiency: 90 },
-      { name: "Docker", proficiency: 75 },
-      { name: "AWS", proficiency: 75 },
-      { name: "CI/CD", proficiency: 80 },
-      { name: "Vercel", proficiency: 85 },
-      { name: "Figma", proficiency: 85 },
-      { name: "Shopify", proficiency: 75 },
-      { name: "Stripe", proficiency: 70 },
-      { name: "WordPress", proficiency: 75 },
+      { name: "Git" },
+      { name: "GitHub Actions" },
+      { name: "Docker" },
+      { name: "AWS" },
+      { name: "GCP" },
+      { name: "Vercel" },
+      { name: "Netlify" },
+      { name: "Postman" },
+    ],
+  },
+  {
+    category: "Platforms & Integrations",
+    items: [
+      { name: "Shopify" },
+      { name: "Liquid" },
+      { name: "Stripe" },
+      { name: "Razorpay" },
+      { name: "GA4" },
     ],
   },
   {
     category: "Programming Languages",
     items: [
-      { name: "JavaScript", proficiency: 90 },
-      { name: "HTML", proficiency: 90 },
-      { name: "CSS", proficiency: 90 },
-      { name: "Python", proficiency: 80 },
-      { name: "Java", proficiency: 70 },
-      { name: "Dart", proficiency: 70 },
-    ],
-  },
-  {
-    category: "Soft Skills",
-    items: [
-      { name: "Problem-Solving", proficiency: 90 },
-      { name: "Project Management", proficiency: 85 },
-      { name: "Mentorship", proficiency: 80 },
-      { name: "Collaboration", proficiency: 85 },
-      { name: "Team Leadership", proficiency: 80 },
-      { name: "Adaptability", proficiency: 85 },
+      { name: "TypeScript" },
+      { name: "JavaScript" },
+      { name: "Python" },
+      { name: "SQL" },
     ],
   },
 ];
@@ -531,12 +439,12 @@ export const skillsContent: SkillsContent = {
   header: {
     title: "Skills & Technologies",
     description:
-      "A comprehensive overview of my technical expertise and proficiency in various domains.",
-    label: "TECHNICAL PROFICIENCY",
+      "A practical full-stack toolkit covering modern frontend and backend development, databases, cloud tooling, and third-party integrations.",
+    label: "TECHNICAL TOOLKIT",
   },
   metrics: {
     technologies: {
-      label: "Technologies",
+      label: "Core Technologies",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -555,7 +463,7 @@ export const skillsContent: SkillsContent = {
       ),
     },
     masteryLevel: {
-      label: "Mastery Level",
+      label: "Skill Areas",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -567,15 +475,14 @@ export const skillsContent: SkillsContent = {
           strokeLinejoin="round"
           className="w-6 h-6"
         >
-          <path d="M12 2v20" />
-          <path d="M2 12h20" />
-          <path d="m4.93 4.93 14.14 14.14" />
-          <path d="m19.07 4.93-14.14 14.14" />
+          <path d="M4 6h16" />
+          <path d="M4 12h16" />
+          <path d="M4 18h16" />
         </svg>
       ),
     },
     expertSkills: {
-      label: "Expert Skills",
+      label: "Work Domains",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -593,7 +500,7 @@ export const skillsContent: SkillsContent = {
       ),
     },
     yearsPractice: {
-      label: "Years Practice",
+      label: "Production Experience",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -605,7 +512,7 @@ export const skillsContent: SkillsContent = {
           strokeLinejoin="round"
           className="w-6 h-6"
         >
-          <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+          <rect width="18" height="18" x="3" y="4" rx="2" />
           <line x1="16" x2="16" y1="2" y2="6" />
           <line x1="8" x2="8" y1="2" y2="6" />
           <line x1="3" x2="21" y1="10" y2="10" />
@@ -614,15 +521,15 @@ export const skillsContent: SkillsContent = {
     },
   },
   metricValues: {
-    technologies: null, // Calculate dynamically from skills data
-    masteryLevel: null, // Calculate dynamically from skills data
-    expertSkills: null, // Calculate dynamically from skills data
-    yearsPractice: "5+",
+    technologies: null,
+    masteryLevel: 6,
+    expertSkills: 2,
+    yearsPractice: "1+",
   },
   viewOptions: [
     {
       id: "cards",
-      label: "Detailed",
+      label: "Skills",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -641,124 +548,35 @@ export const skillsContent: SkillsContent = {
         </svg>
       ),
     },
-    {
-      id: "mastery",
-      label: "Mastery",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4"
-        >
-          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-        </svg>
-      ),
-    },
-    {
-      id: "timeline",
-      label: "Journey",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4"
-        >
-          <path d="M3 3v18h18" />
-          <path d="m19 9-5 5-4-4-3 3" />
-        </svg>
-      ),
-    },
   ],
   categories: [
     "Frontend Development",
     "Backend Development",
-    "Mobile Development",
-    "DevOps & Tools",
+    "Databases & Data",
+    "Cloud & DevOps",
+    "Platforms & Integrations",
     "Programming Languages",
-    "Soft Skills",
   ],
-  masteryLevels: [
-    {
-      id: "expert",
-      title: "Expert",
-      color: "#BBA58F",
-      threshold: 85,
-    },
-    {
-      id: "advanced",
-      title: "Advanced",
-      color: "#959D90",
-      threshold: 70,
-    },
-    {
-      id: "competent",
-      title: "Competent",
-      color: "#E8D9CD",
-      threshold: 0, // Any skill below advanced threshold
-    },
-  ],
+  masteryLevels: [],
   categoryPriority: {
     "Frontend Development": 1,
-    "DevOps & Tools": 2,
-    "Backend Development": 3,
-    "Programming Languages": 4,
-    "Soft Skills": 5,
-    "Mobile Development": 6,
+    "Backend Development": 2,
+    "Databases & Data": 3,
+    "Cloud & DevOps": 4,
+    "Platforms & Integrations": 5,
+    "Programming Languages": 6,
   },
   timeline: {
-    title: "Skill Acquisition Journey",
-    newTechnologies: "New Technologies",
-    data: [
-      { year: 2018, skills: ["HTML", "CSS", "JavaScript", "React.js"] },
-      { year: 2019, skills: ["Node.js", "Express.js", "MongoDB"] },
-      { year: 2020, skills: ["TypeScript", "Next.js", "PostgreSQL"] },
-      { year: 2021, skills: ["Flutter", "React Native", "AWS"] },
-      {
-        year: 2022,
-        skills: ["GSAP", "Framer Motion", "TailwindCSS", "Docker"],
-      },
-      { year: 2023, skills: ["Shadcn", "Django", "CI/CD"] },
-    ],
-    categorySkillMap: {
-      "Frontend Development": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React.js",
-        "GSAP",
-        "Framer Motion",
-        "TailwindCSS",
-        "Next.js",
-        "Shadcn",
-      ],
-      "Backend Development": [
-        "Node.js",
-        "Express.js",
-        "MongoDB",
-        "PostgreSQL",
-        "Django",
-      ],
-      "Mobile Development": ["Flutter", "React Native"],
-      "DevOps & Tools": ["AWS", "Docker", "CI/CD"],
-      "Programming Languages": ["JavaScript", "TypeScript"],
-      "Soft Skills": [],
-    },
+    title: "Technology Journey",
+    newTechnologies: "",
+    data: [],
+    categorySkillMap: {},
   },
   expertiseLevels: {
-    title: "Expertise Levels",
+    title: "Core Technical Areas",
   },
   coreCompetencies: {
-    title: "Core Competencies",
+    title: "Full-Stack Toolkit",
   },
   emptyState: {
     title: "No Skills Found",
@@ -767,17 +585,66 @@ export const skillsContent: SkillsContent = {
   },
   filterMessages: {
     timelineNoData: {
-      title: "No Timeline Data",
-      description: "No timeline data available for this filter category.",
+      title: "Technology Journey Not Published",
+      description:
+        "Skills are shown as an unranked technical toolkit rather than a dated learning history.",
       buttonText: "View All Skills",
     },
     masteryNoData: {
-      title: "No Skills Found",
-      description: "No skills found for this filter category in mastery view.",
+      title: "Proficiency Rankings Removed",
+      description:
+        "Skills are intentionally presented without subjective percentage rankings.",
       buttonText: "View All Skills",
     },
   },
 };
+
+// ============================================
+// Achievements / Highlights
+// ============================================
+
+export const achievements: Achievement[] = [
+  {
+    title: "Web Lead — Google Developer Student Club",
+    description:
+      "Led web initiatives for a 40-member developer community, organized 3 workshops and 2 technical talks, and mentored 10 juniors.",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 2l2.5 7h7l-5.7 4.1 2.2 6.9L12 16l-6 4 2.2-6.9L2.5 9h7z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Runner-Up — Matrix TechFest Inter-College Hackathon",
+    description:
+      "Built a healthcare discovery and appointment platform and placed 2nd among 30 teams.",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 21h8M12 17v4M7 4h10v7a5 5 0 0 1-10 0V4Zm-4 0h4v3a4 4 0 0 1-4-3Zm14 0h4a4 4 0 0 1-4 3V4Z"
+        />
+      </svg>
+    ),
+  },
+];
 
 // ============================================
 // Contact
@@ -794,15 +661,15 @@ export const contactContent: ContactContent = {
     value: myInfo.location,
   },
   connect: {
-    title: "Get in Touch",
+    title: "Have a product, role, or problem worth discussing?",
     description:
-      "I'm always open to new opportunities and collaborations. Whether you're looking to discuss a project, need consultation, or simply want to connect, feel free to reach out.",
+      "I'm open to software engineering opportunities, collaborations, and conversations about building useful products.",
   },
   form: {
     placeholders: {
       name: "Your Name",
       email: "Your Email",
-      message: "Your Message",
+      message: "Tell me what you're building...",
     },
     button: {
       default: "Send Message",
@@ -815,24 +682,6 @@ export const contactContent: ContactContent = {
 // Blog
 // ============================================
 
-export const blogPosts = [
-  {
-    id: 1,
-    title: "Getting Started with Next.js 13",
-    excerpt:
-      "Learn how to build modern web applications with Next.js 13 and its new app directory structure.",
-    date: "2024-03-15",
-    tags: ["Next.js", "React", "Web Development"],
-    url: "/blog/getting-started-nextjs-13",
-  },
-  {
-    id: 2,
-    title: "Mastering TypeScript: Best Practices",
-    excerpt:
-      "Explore advanced TypeScript concepts and learn best practices for large-scale applications.",
-    date: "2024-03-10",
-    tags: ["TypeScript", "JavaScript", "Programming"],
-    url: "/blog/mastering-typescript",
-  },
-  // Add more blog posts...
-] satisfies BlogPost[];
+// No published posts are included until there is current content worth linking.
+// Keeping this empty is preferable to surfacing outdated Next.js 13 articles.
+export const blogPosts: BlogPost[] = [];

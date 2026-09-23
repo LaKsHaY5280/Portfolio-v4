@@ -12,20 +12,15 @@ export const useExpertise = (): SkillCategory[] => {
     (category) => category.category === "Mobile Development"
   );
 
+  // Data is intentionally unranked — no proficiency sorting
   return [
     {
       category: "Web Development",
-      items:
-        frontendSkills?.items
-          .sort((a, b) => b.proficiency - a.proficiency)
-          .slice(0, 4) || [],
+      items: frontendSkills?.items.slice(0, 7) || [],
     },
     {
       category: "App Development",
-      items:
-        mobileSkills?.items
-          .sort((a, b) => b.proficiency - a.proficiency)
-          .slice(0, 4) || [],
+      items: mobileSkills?.items.slice(0, 4) || [],
     },
   ];
 };

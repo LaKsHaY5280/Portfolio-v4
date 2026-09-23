@@ -14,8 +14,9 @@ const MasteryRing = ({ skill, index }: MasteryRingProps) => {
   const strokeWidth = 4;
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
+  const proficiency = skill.proficiency ?? 0;
   const progressOffset =
-    circumference - (skill.proficiency / 100) * circumference;
+    circumference - (proficiency / 100) * circumference;
 
   return (
     <motion.div
@@ -60,7 +61,7 @@ const MasteryRing = ({ skill, index }: MasteryRingProps) => {
         {/* Skill name and percentage in the center */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <p className="font-gemola text-lg text-earth-dark">
-            {skill.proficiency}%
+            {proficiency}%
           </p>
           <p className="text-xs text-earth-brown/80 font-al text-center px-2">
             {skill.name}

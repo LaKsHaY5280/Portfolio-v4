@@ -202,7 +202,7 @@ export interface ProjectsContent {
 
 export interface Skill {
   name: string;
-  proficiency: number;
+  proficiency?: number;
   icon?: string;
 }
 
