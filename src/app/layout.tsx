@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// @ts-expect-error Next.js processes global CSS imports at build time.
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Frame from "@/components/layout/Frame";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -23,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth">
       <body
-        className={`${inter.className} bg-earth-light text-earth-dark`}
+        className="bg-earth-light text-earth-dark"
         suppressHydrationWarning
       >
         <Frame>
